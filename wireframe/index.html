@@ -145,6 +145,8 @@ code.inline{background:#eef2f7;border:1px solid var(--line);border-radius:6px;pa
     <a href="#w01">01 로그인</a><a href="#w02">02 가입·인증</a><a href="#w03">03 승인대기</a>
     <a href="#w04">04 목록</a><a href="#w05">05 등록·수정</a><a href="#w06">06 상세</a>
     <a href="#w07">07 관리자</a><a href="#w08">08 삭제내역</a>
+    <a href="../docs/구현착수_정보_및_준비체크.md" target="_blank" rel="noopener">계정·구현 준비</a>
+    <a href="../docs/프로젝트_현황_분석.md" target="_blank" rel="noopener">프로젝트 분석</a>
   </nav>
   <div class="spacer"></div>
   <div class="toggle" role="group" aria-label="미리보기">
@@ -158,7 +160,7 @@ code.inline{background:#eef2f7;border:1px solid var(--line);border-radius:6px;pa
 
 <div class="hero">
   <h1>발주현황 관리 — 화면 와이어프레임 (총 8화면)</h1>
-  <p>기준 문서: <code class="inline">docs/모션나인_발주현황_기획설계서.md v1.1 (2026-09-27)</code> · 대상: 관리자 3~5명, PC·스마트폰 반응형 · 이 파일은 구현 전 화면 합의용입니다. 모든 버튼은 더미(동작 없음)이며, 실제 데이터·인증은 연결되지 않았습니다.</p>
+  <p>기준 문서: <code class="inline">docs/모션나인_발주현황_기획설계서.md v1.1 (2026-09-27)</code> · 대상: 관리자 3~5명, PC·스마트폰 반응형 · 8개 화면과 PC·모바일 레이아웃을 검토하는 예시 화면입니다. PC·모바일 전환, 가입 상태 탭, 금액 미리보기는 동작합니다. 표시된 관리자·발주 데이터는 가상 예시이고, 로그인·DB 저장 및 실제 내보내기는 연결되지 않았습니다. 현재 구현된 화면과 Supabase 준비 항목은 상단 도움 문서를 참고하세요.</p>
   <div class="legend">
     <div class="li"><b>색 규칙(§5.4 제안)</b><br>헤더 진네이비 · 주버튼 청록 · 접수 <span class="pill p1">회색</span> 준비 <span class="pill p2">주황</span> 발송 <span class="pill p3">파랑</span> 완료 <span class="pill p9">초록</span></div>
     <div class="li"><b>공통 규칙</b><br>· 기본 정렬: 발주일 내림차순 + ID 내림차순<br>· 페이지 20건(선택 50건), 최대 50건<br>· 검색 버튼/Enter 실행, 서버 검색</div>
