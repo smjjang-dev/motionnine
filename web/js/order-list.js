@@ -142,22 +142,6 @@ function renderPager() {
     });
     pg.appendChild(next);
   }
-  const sel = document.createElement('select');
-  sel.className = 'btn sm';
-  sel.id = 'sizeSelLive';
-  for (const n of [20, 50]) {
-    const o = document.createElement('option');
-    o.value = String(n);
-    o.textContent = `${n}건`;
-    if (n === state.size) o.selected = true;
-    sel.appendChild(o);
-  }
-  sel.addEventListener('change', () => {
-    state.size = Number(sel.value);
-    state.page = 1;
-    load();
-  });
-  pg.appendChild(sel);
 }
 
 function showState(kind, msg) {
@@ -226,6 +210,7 @@ function doSearch() {
   state.from = $('fromDate').value;
   state.to = $('toDate').value;
   state.stage = $('stageSel').value;
+  state.size = Number($('sizeSel').value);
   state.page = 1;
   load();
 }
@@ -292,6 +277,7 @@ async function init() {
   });
   $('btnReset').addEventListener('click', resetFilters);
   $('stageSel').addEventListener('change', doSearch);
+  $('sizeSel').addEventListener('change', doSearch);
   $('btnLogout').addEventListener('click', signOut);
   document.querySelectorAll('.stage[data-stage]').forEach((card) => {
     card.style.cursor = 'pointer';
