@@ -18,7 +18,9 @@ code.inline{background:#eef2f7;border:1px solid var(--line);border-radius:6px;pa
 .topbar{position:sticky;top:0;z-index:50;background:var(--navy);color:#fff;
   padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .topbar .logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px;letter-spacing:-.3px;text-decoration:none;color:#fff}
-.topbar .logo img{width:26px;height:26px}
+.topbar .logo img{width:116px;height:auto;display:block;padding:4px 6px;
+  background:#fff;border:1px solid #e2e8f0;border-radius:7px}
+.topbar .logo .logo-label{white-space:nowrap;font-size:16px}
 .topbar .ver{font-size:12px;background:#ffffff22;border:1px solid #ffffff44;padding:2px 8px;border-radius:20px;white-space:nowrap}
 .topnav{display:flex;gap:6px;flex-wrap:wrap}
 .topnav a{color:#dbe4f3;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid transparent}

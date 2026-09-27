@@ -29,7 +29,7 @@ table.grid td.num,table.grid th.num{text-align:right;font-variant-numeric:tabula
 .auth-box{max-width:440px;margin:14px auto;border:1px solid var(--line);border-radius:12px;padding:20px;background:#fff}
 .auth-box h3{margin:0 0 4px;text-align:center}
 .auth-box .logo-big{text-align:center;font-size:22px;font-weight:900;color:var(--navy);margin-bottom:2px}
-.auth-box .logo-big img{width:44px;height:44px;display:block;margin:0 auto 6px}
+.auth-box .logo-big img{width:180px;max-width:100%;height:auto;display:block;margin:0 auto 6px}
 .auth-box label{font-size:13px;font-weight:700;display:block;margin:12px 0 6px}
 .auth-box .row{display:flex;gap:8px}
 
