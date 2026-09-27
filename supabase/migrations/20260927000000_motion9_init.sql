@@ -860,7 +860,7 @@ begin
   end if;
   return query
   select m.user_id, m.display_name, m.role, m.status, m.created_at,
-         u.email, u.email_confirmed_at, u.last_sign_in_at
+         u.email::text, u.email_confirmed_at, u.last_sign_in_at
   from public.motion9_members m
   left join auth.users u on u.id = m.user_id
   order by m.created_at, m.user_id;
@@ -1026,12 +1026,20 @@ grant select on public.motion9_order_audit_logs to authenticated;
 -- private 테이블·함수: 기본 소유자만 (추가 GRANT 없음)
 
 -- 내부 함수: PUBLIC 실행 회수
+-- 단, RLS 정책·INVOKER RPC가 호출하는 3종은 authenticated에 EXECUTE 필요
+-- (호출 권한 없이 DEFINER라도 실행 불가 → 회수 시 모든 조회가 42501로 막힘).
+-- 3종 모두 인자 없는 호출자 판정·순수 문자열 함수라 직접 호출해도 안전.
 revoke all on function private.motion9_is_active_admin() from public, anon, authenticated;
 revoke all on function private.motion9_is_owner() from public, anon, authenticated;
 revoke all on function private.motion9_calc(int, numeric, boolean, numeric, boolean) from public, anon, authenticated;
 revoke all on function private.motion9_escape_like(text) from public, anon, authenticated;
 revoke all on function private.motion9_touch_updated_at() from public, anon, authenticated;
 revoke all on function private.motion9_handle_new_user() from public, anon, authenticated;
+grant execute on function private.motion9_is_active_admin() to authenticated;
+grant execute on function private.motion9_is_owner() to authenticated;
+grant execute on function private.motion9_escape_like(text) to authenticated;
+-- INVOKER 함수(escape_like) 호출 시 스키마 해결용. 테이블·미부여 함수 접근은 그대로 차단.
+grant usage on schema private to authenticated;
 
 -- 공개 RPC: 기본 PUBLIC EXECUTE 회수 후 authenticated에만 부여
 revoke all on function public.motion9_get_my_access() from public, anon, authenticated;
