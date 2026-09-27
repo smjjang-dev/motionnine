@@ -1,6 +1,6 @@
 // web/js/config.js
-// 공개 설정 전용. 최종 번들에 그대로 들어가므로 비밀값(service_role, OAuth Secret,
-// SMTP 비밀번호 등)을 절대 넣지 말 것. 브라우저에는 URL + publishable/anon key만.
+// 공개 설정 전용. 최종 번들에 그대로 들어가므로 서버 전용 키·OAuth Secret·
+// SMTP 비밀번호 등 비밀값을 절대 넣지 말 것. 브라우저에는 URL + publishable/anon key만.
 // 실값은 배포 시점에 web/js/config.local.js(깃무시)로 주입. 예시: config.local.example.js
 let local = {};
 try {
