@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<title>로그인 처리 중 — 모션나인</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<div class="wrap" id="wrap">
+<section class="screen">
+  <div class="mock">
+    <div class="auth-box">
+      <div class="logo-big"><img src="../img/logo.svg" alt="모션나인">모션나인</div>
+      <h3>로그인 처리 중</h3>
+      <p class="hint" style="text-align:center" id="cbMsg">인증 정보를 확인하고 있습니다…</p>
+    </div>
+  </div>
+</section>
+</div>
+<!-- vendor: Phase 9에서 자체호스팅으로 제공 (web/vendor/supabase-js.min.js) -->
+<script src="../vendor/supabase-js.min.js"></script>
+<script type="module">
+import { handleCallback } from '../js/auth.js';
+try {
+  await handleCallback();
+} catch (err) {
+  document.getElementById('cbMsg').textContent = '로그인 처리에 실패했습니다. 로그인 화면으로 돌아가세요.';
+  const a = document.createElement('a');
+  a.href = 'login.html';
+  a.className = 'btn primary';
+  a.style.cssText = 'width:100%;margin-top:12px;display:block;text-align:center';
+  a.textContent = '로그인으로 돌아가기';
+  document.querySelector('.auth-box').appendChild(a);
+}
+</script>
+</body>
+</html>
