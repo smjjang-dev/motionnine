@@ -26,14 +26,19 @@
   <div class="screen-head"><span class="badge">W-03</span><h2>승인 대기 · 접근 중지</h2>
   <p class="sub">본인 상태만 표시 + 로그아웃. 미승인/중지 계정은 모든 업무 API 차단(§4.1).</p></div>
   <div class="mock">
+    <p class="hint" id="gateNotice"></p>
+    <p class="hint" id="gateLoading">내 승인 상태를 확인하고 있습니다…</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
-      <div class="warnbox"><b>관리자 승인 대기 중</b><br>홍길동(new-admin@example.com) · 상태: <span class="pill p-pend">pending</span><br>대표 관리자에게 승인 요청이 전달되었습니다. 승인 후 발주 메뉴를 사용할 수 있습니다.<br><br><a class="btn sm" href="login.html">로그아웃</a> <button class="btn ghost sm" type="button">내 상태 다시 확인</button></div>
-      <div class="errbox"><b>접근 권한이 중지되었습니다</b><br>문의: 대표 관리자(010-XXXX-XXXX)<br>업무 화면·데이터 접근이 차단됩니다. 캐시·토큰은 로그아웃 시 정리됩니다.<br><br><a class="btn sm" href="login.html">로그아웃</a></div>
+      <div class="warnbox" id="cardPending" style="display:none"><b>관리자 승인 대기 중</b><br><span id="pendingWho">-</span> · 상태: <span class="pill p-pend">pending</span><br>대표 관리자에게 승인 요청이 전달되었습니다. 승인 후 발주 메뉴를 사용할 수 있습니다.<br><br><button class="btn sm" type="button" id="btnLogout1">로그아웃</button> <button class="btn ghost sm" type="button" id="btnRecheck">내 상태 다시 확인</button></div>
+      <div class="errbox" id="cardStopped" style="display:none"><b>접근 권한이 중지되었습니다</b><br>문의: 대표 관리자(010-XXXX-XXXX)<br>업무 화면·데이터 접근이 차단됩니다. 캐시·토큰은 로그아웃 시 정리됩니다.<br><br><button class="btn sm" type="button" id="btnLogout2">로그아웃</button></div>
     </div>
   </div>
   <div class="spec">문구 고정(§4.2-7). owner 승인 RPC가 정원·자격 재검증 후 active 전환. 한도 초과 시 거부.</div>
 </section>
 </div>
 <script src="../js/common.js"></script>
+<!-- vendor: Phase 9에서 자체호스팅으로 제공 (web/vendor/supabase-js.min.js) -->
+<script src="../vendor/supabase-js.min.js"></script>
+<script type="module" src="../js/pending.js"></script>
 </body>
 </html>
