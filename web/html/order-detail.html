@@ -26,23 +26,23 @@
   <div class="screen-head"><span class="badge">W-06 · 핵심</span><h2>발주 상세 (조회·이력·다운로드)</h2>
   <p class="sub">전체 항목 + 계산 내역 + 등록·수정 정보 + 변경 이력. 다운로드는 최신 저장값 재조회 후 A4 출력 DOM에서 생성(§10.2).</p></div>
   <div class="mock">
-    <div class="bar"><span class="b-logo">발주 상세 20260927-00001</span><span class="pill p1">접수</span><span class="b-user"><a href="orders.html" style="color:#fff">목록으로</a> · <a href="order-form.html" style="color:#fff">수정</a> · 삭제</span></div>
+    <p class="hint" id="detMsg"></p>
+    <div id="detBody">
+    <div class="bar"><span class="b-logo" id="detTitle">발주 상세</span><span class="pill p1" id="detPill">-</span><span class="b-user"><a href="orders.html" style="color:#fff">목록으로</a> · <a href="order-form.html" id="linkEdit" style="color:#fff">수정</a> · <a href="order-form.html" id="linkDelete" style="color:#fff">삭제</a></span></div>
     <div class="formwrap">
     <div>
-      <dl class="kv"><dt>거래처</dt><dd>A상사</dd><dt>주문자</dt><dd>김주문</dd><dt>연락처 / 이메일</dt><dd>010-1234-5678 / kim@example.com</dd><dt>제품 / 코드</dt><dd>제품A / A01</dd><dt>옵션</dt><dd>색상: 화이트 / 추가 포장</dd>
-      <dt>수량 / MOQ / 단가</dt><dd>10개 / 5개 / 10,000원</dd><dt>세금·배송</dt><dd>부가세 별도 N(VAT포함) · 배송비 포함 Y · 배송비 3,000원(참고값)</dd>
-      <dt>발주일 / 번호날짜</dt><dd>2026-09-27 10:30 KST / 2026-09-27 (다를 수 있음)</dd>
-      <dt>등록</dt><dd>2026-09-27 10:31 김관리</dd><dt>최종 수정</dt><dd>2026-09-27 11:02 이관리 (v3)</dd></dl>
+      <dl class="kv" id="detKv"></dl>
       <div class="summary" style="margin-top:12px"><h4>계산 내역 (DB 확정값)</h4>
-      <table><tr><td>상품 공급가액</td><td>90,909</td></tr><tr><td>상품 VAT</td><td>9,091</td></tr><tr><td>추가 배송 청구액 (공급가+VAT)</td><td>0 (0+0)</td></tr><tr class="total"><td>공급가 합계 / VAT 합계 / 최종 청구액</td><td>90,909 / 9,091 / 100,000</td></tr></table></div>
-      <h4 style="margin:14px 0 4px">변경 이력 (order_audit_logs)</h4>
-      <div class="timeline"><div><b>11:02</b> 이관리 · 수량 8→10 · 사유: 거래처 추가 요청 · v2→v3</div><div><b>10:45</b> 김관리 · stage 1→2→1 역행 · 사유: 오입력 정정</div><div><b>10:31</b> 김관리 · 생성 · 20260927-00001 발급</div></div>
+      <table><tr><td>상품 공급가액</td><td id="c-ps">-</td></tr><tr><td>상품 VAT</td><td id="c-pv">-</td></tr><tr><td>추가 배송 청구액 (공급가+VAT)</td><td id="c-f">-</td></tr><tr class="total"><td>공급가 합계 / VAT 합계 / 최종 청구액</td><td id="c-sum">-</td></tr></table></div>
+      <h4 style="margin:14px 0 4px">변경 이력 (motion9_order_audit_logs)</h4>
+      <div class="timeline" id="auditList"></div>
     </div>
     <div class="summary"><h4>출력 · 다운로드</h4>
-      <button class="btn primary" style="width:100%" type="button">PNG 다운로드</button>
-      <button class="btn dark" style="width:100%;margin-top:8px" type="button">PDF 다운로드</button>
-      <p class="hint">파일명: <code class="inline">모션나인_발주명세서_20260927-00001.pdf</code><br>· 고정폭 A4 출력 DOM 사용(모바일 화면 캡처 아님)<br>· 한글 폰트 로드 대기 → 페이지별 캡처<br>· 장문은 다중페이지 PDF / PNG는 페이지별 파일<br>· 이미지 PDF라 본문 검색 미지원 — HTML 상세가 원본<br>· 이메일·UUID·권한은 표시 금지(§10.1)</p>
+      <button class="btn primary" style="width:100%" type="button" id="btnPng">PNG 다운로드</button>
+      <button class="btn dark" style="width:100%;margin-top:8px" type="button" id="btnPdf">PDF 다운로드</button>
+      <p class="hint" id="dlMsg">파일명: <code class="inline">모션나인_발주명세서_{발주번호}.pdf</code><br>· 고정폭 A4 출력 DOM 사용(모바일 화면 캡처 아님)<br>· 한글 폰트 로드 대기 → 페이지별 캡처<br>· 장문은 다중페이지 PDF / PNG는 페이지별 파일<br>· 이미지 PDF라 본문 검색 미지원 — HTML 상세가 원본<br>· 이메일·UUID·권한은 표시 금지(§10.1)</p>
       <div class="okbox">명세서 포함: 문서명·번호·거래처·주문자·연락처·이메일·발주일·제품·수량·단가·세금배송·공급가·VAT·합계·단계·등록/수정자·출력시각(KST)</div>
+    </div>
     </div>
     </div>
   </div>
@@ -50,5 +50,8 @@
 </section>
 </div>
 <script src="../js/common.js"></script>
+<!-- vendor: Phase 9에서 자체호스팅으로 제공 (web/vendor/supabase-js.min.js) -->
+<script src="../vendor/supabase-js.min.js"></script>
+<script type="module" src="../js/order-detail.js"></script>
 </body>
 </html>

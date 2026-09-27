@@ -286,6 +286,7 @@ async function init() {
     editVersion = row.version;
     $('orderNoLabel').value = `${row.order_no} (v${row.version})`;
     fill(row);
+    if (location.hash === '#delete') openDelete();
   } else {
     requestId = newRequestId();
     $('reqLabel').textContent = `요청ID: ${requestId.slice(0, 8)}… (중복등록 방지 §8.1)`;
