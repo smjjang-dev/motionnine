@@ -21,3 +21,7 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+
+### motionnine ###
+#로컬 Supabase 접속 정보 (실 키 — 커밋 금지, 예시는 config.local.example.js)
+web/js/config.local.js
