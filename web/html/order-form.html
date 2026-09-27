@@ -5,31 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
-<title>W-05 등록·수정 — 모션나인 와이어프레임</title>
+<title>발주 등록·수정 — 모션나인 발주관리</title>
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/components.css">
 <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
 <div class="topbar">
-  <a class="logo" href="index.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
-  <span class="ver">W-05 등록 · 수정</span>
+  <a class="logo" href="orders.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
   <nav class="topnav">
-    <a href="index.html">허브</a><a href="login.html">01 로그인</a><a href="signup.html">02 가입·인증</a><a href="pending.html">03 승인대기</a><a href="orders.html">04 목록</a><a href="order-form.html" class="active">05 등록·수정</a><a href="order-detail.html">06 상세</a><a href="admin.html">07 관리자</a><a href="trash.html">08 삭제내역</a>
+    <a href="orders.html">발주목록</a><a href="order-form.html" class="active">발주등록</a><a href="admin.html">관리자설정</a><a href="trash.html">삭제내역</a>
   </nav>
   <div class="spacer"></div>
-  <div class="toggle"><button id="btnPc" class="on" type="button">PC</button><button id="btnMo" type="button">모바일</button></div>
 </div>
 <div class="wrap" id="wrap">
-<div class="phone-note">모바일 미리보기: 1열 + 하단 고정 저장 버튼(§5.4).</div>
 <section class="screen">
-  <div class="screen-head"><span class="badge">W-05 · 핵심</span><h2>발주 등록 / 수정</h2>
-  <p class="sub">입력 순서: 거래처 → 주문자·연락처·이메일 → 제품 → 수량·MOQ·단가 → 세금·배송 → 발주일·단계 → 합계 확인(§5.3). 발주번호·등록정보는 읽기전용.</p></div>
   <div class="mock">
     <div class="bar"><span class="b-logo" id="formTitle">발주 등록</span><span class="b-user" id="reqLabel">-</span><span class="b-user"><button class="btn sm" type="button" id="btnDelete" style="display:none;min-height:0;padding:2px 8px">삭제</button></span></div>
     <div class="formwrap">
     <div class="form">
-      <div class="fld full"><label>발주번호 (자동, 읽기전용)</label><input id="orderNoLabel" disabled value="저장 시 발급"><div class="f-help">번호 날짜 = 최초 등록 시점의 한국 날짜. 소급 발주일과 다를 수 있음(§8.1).</div></div>
+      <div class="fld full"><label>발주번호 (자동, 읽기전용)</label><input id="orderNoLabel" disabled value="저장 시 발급"><div class="f-help">번호 날짜 = 최초 등록 시점의 한국 날짜. 소급 발주일과 다를 수 있습니다.</div></div>
       <div class="fld"><label for="f-client">거래처명 <span class="req">*</span></label><input id="f-client" autocomplete="off" placeholder="A상사"><div class="f-err" id="e-client" style="display:none"></div></div>
       <div class="fld"><label for="f-orderer">주문자 <span class="req">*</span></label><input id="f-orderer" autocomplete="off" placeholder="김주문"><div class="f-err" id="e-orderer" style="display:none"></div></div>
       <div class="fld"><label for="f-phone">주문자 연락처(휴대폰) <span class="req">*</span></label><input id="f-phone" inputmode="tel" placeholder="010-1234-5678"><div class="f-help">예: 010-1234-5678 (하이픈 선택).</div><div class="f-err" id="e-phone" style="display:none"></div></div>
@@ -42,9 +37,9 @@
       <div class="fld"><label for="f-moq">MOQ (선택, 입력 시 수량 ≥ MOQ)</label><input id="f-moq" type="number" min="1" max="1000000" step="1" placeholder="미입력"><div class="f-err" id="e-moq" style="display:none"></div></div>
       <div class="fld"><label for="f-price">단가(원) <span class="req">*</span> (0~10억, 기본값 없음)</label><input id="f-price" type="number" min="0" max="1000000000" step="1" placeholder="10000"><div class="f-err" id="e-price" style="display:none"></div></div>
       <div class="fld"><label for="f-vat">부가세 별도</label><select id="f-vat"><option value="N" selected>N — 단가에 VAT 포함</option><option value="Y">Y — 단가에 VAT 별도</option></select></div>
-      <div class="fld"><label for="f-ship">배송비 포함</label><select id="f-ship"><option value="Y" selected>Y — 상품금액에 포함 (추가청구 0원)</option><option value="N">N — 별도 청구</option></select><div class="f-help">명칭 확정 필요(§3.2): Y/N + 설명 병기.</div></div>
+      <div class="fld"><label for="f-ship">배송비 포함</label><select id="f-ship"><option value="Y" selected>Y — 상품금액에 포함 (추가청구 0원)</option><option value="N">N — 별도 청구</option></select><div class="f-help">Y = 상품금액에 포함되어 추가 청구가 없고, N = 배송비를 별도로 청구합니다.</div></div>
       <div class="fld"><label for="f-fee">배송비(원, VAT포함) <span class="req">*</span> 기본 3,000</label><input id="f-fee" type="number" min="0" max="1000000000" step="1" placeholder="3000"><div class="f-err" id="e-fee" style="display:none"></div></div>
-      <div class="fld"><label for="f-stage">발송단계 <span class="req">*</span></label><select id="f-stage"><option value="1" selected>1 접수 (기본)</option><option value="2">2 준비</option><option value="3">3 발송</option><option value="9">9 완료</option></select><div class="f-help">건너뛰기·역행·완료 후 수정은 사유 필수(§8.3).</div><div class="f-err" id="e-stage" style="display:none"></div></div>
+      <div class="fld"><label for="f-stage">발송단계 <span class="req">*</span></label><select id="f-stage"><option value="1" selected>1 접수 (기본)</option><option value="2">2 준비</option><option value="3">3 발송</option><option value="9">9 완료</option></select><div class="f-help">단계를 거꾸로 되돌리거나 건너뛰어 변경할 때, 완료된 발주의 금액을 바꿀 때는 사유가 필요합니다.</div><div class="f-err" id="e-stage" style="display:none"></div></div>
       <div class="fld full"><label for="f-reason">변경 사유 (단계 역행·완료 후 수정·삭제 시 필수)</label><input id="f-reason" placeholder="예: 거래처 요청으로 발송→준비 정정"><div class="f-err" id="e-reason" style="display:none"></div></div>
     </div>
     <div class="summary"><h4>금액 미리보기 (저장은 DB 확정값)</h4>
@@ -52,10 +47,10 @@
       <tr><td>상품 공급가액</td><td id="s-ps">90,909</td></tr><tr><td>상품 VAT</td><td id="s-pv">9,091</td></tr>
       <tr><td>추가 배송 청구액</td><td id="s-f">0</td></tr><tr><td>배송 공급가액 / VAT</td><td id="s-sv">0 / 0</td></tr>
       <tr class="total"><td>최종 청구액</td><td id="s-t">100,000</td></tr></table>
-      <p class="hint">계산식 §7.1 · VAT 10% · 원 반올림 · 공급가+VAT=합계. 수량·단가·조건을 바꾸면 즉시 재계산(js/order-form.js).</p>
+      <p class="hint">저장 시 금액은 서버에서 확정됩니다. 미리보기와 다르면 저장된 값이 맞습니다.</p>
       <p class="err" id="formMsg"></p>
       <div class="sticky-save"><a class="btn ghost" href="orders.html">취소</a><button class="btn primary" type="button" id="btnSave">저장 (중복클릭 방지·잠금)</button></div>
-      <p class="hint">수정 시 <code class="inline">id + version</code> 낙관적 잠금. 충돌 시 “다른 관리자가 먼저 수정 — 새 데이터 불러오기”.</p>
+      <p class="hint">다른 관리자가 먼저 수정한 경우 충돌 안내가 표시되며, 새 데이터를 불러온 뒤 다시 저장하세요.</p>
     </div>
     </div>
     <div class="modal" id="delModal" style="display:none"><b>발주 삭제 확인</b><br>
@@ -65,7 +60,6 @@
       <p class="err" id="delMsg"></p>
       <div style="margin-top:8px;display:flex;gap:8px"><button class="btn danger sm" type="button" id="btnDelConfirm">삭제하기</button><button class="btn ghost sm" type="button" id="btnDelCancel">취소</button></div></div>
   </div>
-  <div class="spec">유효성 §6.3~§6.6: 공백만 입력 불가, 주문자·휴대폰 형식·이메일 형식, 수량 정수·범위, MOQ, 금액 음수 불가. 미저장 이동 시 확인. client_request_id 재시도는 동일 번호 반환(§8.1).</div>
 </section>
 </div>
 <script src="../js/common.js"></script>

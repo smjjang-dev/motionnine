@@ -56,7 +56,7 @@ RELEASE 빌드에서는 인증 상세 로그를 제거한다.
 
 - `docs/모션나인_발주현황_기획설계서.md` — 최상위 명세 (업무 규칙, 금액, 발주번호, RLS/RPC). 문서 충돌 시 이 파일을 우선하고, 다음은 `docs/DB설계/motion9_DB설계서.md`.
 - `docs/구현지시서/README.md` + `00_공통_기준.md` → `01..11` — 구현 순서. 화면 작업 전 `00`을 먼저 읽을 것.
-- `web/html/*.html` (진입점: `index.html`) + `web/css/*.css` + `web/js/*.js` — 클릭용 와이어프레임이며 모든 버튼은 더미. `wireframe/index.html`은 구버전 단일 파일, 현재 기준은 `web/`.
+- `web/html/*.html` (진입점: `index.html` → `login.html`로 리다이렉트) + `web/css/*.css` + `web/js/*.js` — 실운영 화면. 와이어프레임 잔재(설명 박스·미리보기 토글·W-번호)는 제거됨. `wireframe/index.html`은 구버전 단일 파일, 현재 기준은 `web/`.
 - `supabase/migrations/` — 유일하게 실행 가능한 백엔드 코드. CLI가 아닌 Dashboard SQL Editor로 적용.
 
 ## 실행 / 검증 방법 (CLI 없음)

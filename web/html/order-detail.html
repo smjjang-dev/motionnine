@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
-<title>W-06 상세 — 모션나인 와이어프레임</title>
+<title>발주 상세 — 모션나인 발주관리</title>
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/components.css">
 <link rel="stylesheet" href="../css/responsive.css">
@@ -13,19 +13,14 @@
 </head>
 <body>
 <div class="topbar">
-  <a class="logo" href="index.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
-  <span class="ver">W-06 상세</span>
+  <a class="logo" href="orders.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
   <nav class="topnav">
-    <a href="index.html">허브</a><a href="login.html">01 로그인</a><a href="signup.html">02 가입·인증</a><a href="pending.html">03 승인대기</a><a href="orders.html">04 목록</a><a href="order-form.html">05 등록·수정</a><a href="order-detail.html" class="active">06 상세</a><a href="admin.html">07 관리자</a><a href="trash.html">08 삭제내역</a>
+    <a href="orders.html">발주목록</a><a href="order-form.html">발주등록</a><a href="admin.html">관리자설정</a><a href="trash.html">삭제내역</a>
   </nav>
   <div class="spacer"></div>
-  <div class="toggle"><button id="btnPc" class="on" type="button">PC</button><button id="btnMo" type="button">모바일</button></div>
 </div>
 <div class="wrap" id="wrap">
-<div class="phone-note">모바일 미리보기 모드입니다.</div>
 <section class="screen">
-  <div class="screen-head"><span class="badge">W-06 · 핵심</span><h2>발주 상세 (조회·이력·다운로드)</h2>
-  <p class="sub">전체 항목 + 계산 내역 + 등록·수정 정보 + 변경 이력. 다운로드는 최신 저장값 재조회 후 A4 출력 DOM에서 생성(§10.2).</p></div>
   <div class="mock">
     <p class="hint" id="detMsg"></p>
     <div id="detBody">
@@ -41,13 +36,12 @@
     <div class="summary"><h4>출력 · 다운로드</h4>
       <button class="btn primary" style="width:100%" type="button" id="btnPng">PNG 다운로드</button>
       <button class="btn dark" style="width:100%;margin-top:8px" type="button" id="btnPdf">PDF 다운로드</button>
-      <p class="hint" id="dlMsg">파일명: <code class="inline">모션나인_발주명세서_{발주번호}.pdf</code><br>· 고정폭 A4 출력 DOM 사용(모바일 화면 캡처 아님)<br>· 한글 폰트 로드 대기 → 페이지별 캡처<br>· 장문은 다중페이지 PDF / PNG는 페이지별 파일<br>· 이미지 PDF라 본문 검색 미지원 — HTML 상세가 원본<br>· 이메일·UUID·권한은 표시 금지(§10.1)</p>
+      <p class="hint" id="dlMsg">파일명: <code class="inline">모션나인_발주명세서_{발주번호}.pdf</code><br>· 긴 내용은 여러 페이지로 나뉩니다<br>· PDF 본문은 이미지라 글자 검색이 안 됩니다 — 화면 내용이 원본입니다</p>
       <div class="okbox">명세서 포함: 문서명·번호·거래처·주문자·연락처·이메일·발주일·제품·수량·단가·세금배송·공급가·VAT·합계·단계·등록/수정자·출력시각(KST)</div>
     </div>
     </div>
     </div>
   </div>
-  <div class="spec">권한 없는/없는 건은 공통 오류 처리(§9.1). 완료 상태 금액 수정 시 추가 확인 + 사유. 미저장 폼 출력은 “저장 후 출력” 안내.</div>
 </section>
 </div>
 <script src="../js/common.js"></script>

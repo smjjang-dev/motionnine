@@ -5,32 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
-<title>W-07 관리자 설정 — 모션나인 와이어프레임</title>
+<title>관리자 설정 — 모션나인 발주관리</title>
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/components.css">
 <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
 <div class="topbar">
-  <a class="logo" href="index.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
-  <span class="ver">W-07 관리자</span>
+  <a class="logo" href="orders.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
   <nav class="topnav">
-    <a href="index.html">허브</a><a href="login.html">01 로그인</a><a href="signup.html">02 가입·인증</a><a href="pending.html">03 승인대기</a><a href="orders.html">04 목록</a><a href="order-form.html">05 등록·수정</a><a href="order-detail.html">06 상세</a><a href="admin.html" class="active">07 관리자</a><a href="trash.html">08 삭제내역</a>
+    <a href="orders.html">발주목록</a><a href="order-form.html">발주등록</a><a href="admin.html" class="active">관리자설정</a><a href="trash.html">삭제내역</a>
   </nav>
   <div class="spacer"></div>
-  <div class="toggle"><button id="btnPc" class="on" type="button">PC</button><button id="btnMo" type="button">모바일</button></div>
 </div>
 <div class="wrap" id="wrap">
-<div class="phone-note">모바일 미리보기 모드입니다.</div>
 <section class="screen">
-  <div class="screen-head"><span class="badge">W-07</span><h2>관리자 설정 (owner 전용)</h2>
-  <p class="sub">승인 대기·활성·중지 사용자, 정원(3~5)·역할, 승인/중지 이력. 모든 변경은 설정행 잠금 + 감사(§4.2).</p></div>
   <div class="mock">
     <div class="bar"><span class="b-logo">관리자 설정</span><span class="b-user">owner 전용 · 일반 admin 접근 불가</span></div>
     <p class="hint" id="adminMsg"></p>
     <div class="summary" style="margin-top:12px"><h4 id="quotaText">정원: 활성 - / 최대 -</h4>
     <div class="quota"><i id="quotaBar" style="width:0%"></i></div>
-    <p class="hint">마지막 owner 중지·강등 금지 · 정원을 현재 활성보다 낮게 축소 금지 · UUID 기준 계산(§4.2).</p>
+    <p class="hint">마지막 대표 관리자는 중지·강등할 수 없으며, 정원을 현재 활성 인원보다 낮게 줄일 수 없습니다.</p>
     <p class="hint" id="limitWarn"></p>
     <div style="display:flex;gap:8px;flex-wrap:wrap"><select id="limitSel" style="max-width:200px"><option value="5">최대 인원: 5</option><option value="4">4</option><option value="3">3</option></select><button class="btn primary sm" type="button" id="btnLimit">정원 변경</button></div></div>
     <h4 id="pendTitle">승인 대기</h4>
@@ -47,7 +42,6 @@
       <span id="cfText">-</span><br>
       <div style="margin-top:8px;display:flex;gap:8px"><button class="btn primary sm" type="button" id="cfOk">확인</button><button class="btn ghost sm" type="button" id="cfCancel">취소</button></div></div>
   </div>
-  <div class="spec">관리자 이메일·인증상태는 owner RPC가 최소 반환(§6.2). 계정은 중지로 운영, Auth 영구삭제는 별도 절차.</div>
 </section>
 </div>
 <script src="../js/common.js"></script>

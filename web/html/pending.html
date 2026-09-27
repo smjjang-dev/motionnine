@@ -5,26 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
-<title>W-03 승인대기 — 모션나인 와이어프레임</title>
+<title>승인대기 — 모션나인 발주관리</title>
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/components.css">
 <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
 <div class="topbar">
-  <a class="logo" href="index.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
-  <span class="ver">W-03 승인대기</span>
+  <a class="logo" href="orders.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
   <nav class="topnav">
-    <a href="index.html">허브</a><a href="login.html">01 로그인</a><a href="signup.html">02 가입·인증</a><a href="pending.html" class="active">03 승인대기</a><a href="orders.html">04 목록</a><a href="order-form.html">05 등록·수정</a><a href="order-detail.html">06 상세</a><a href="admin.html">07 관리자</a><a href="trash.html">08 삭제내역</a>
+    <a href="orders.html">발주목록</a><a href="order-form.html">발주등록</a><a href="admin.html">관리자설정</a><a href="trash.html">삭제내역</a>
   </nav>
   <div class="spacer"></div>
-  <div class="toggle"><button id="btnPc" class="on" type="button">PC</button><button id="btnMo" type="button">모바일</button></div>
 </div>
 <div class="wrap" id="wrap">
-<div class="phone-note">모바일 미리보기 모드입니다.</div>
 <section class="screen">
-  <div class="screen-head"><span class="badge">W-03</span><h2>승인 대기 · 접근 중지</h2>
-  <p class="sub">본인 상태만 표시 + 로그아웃. 미승인/중지 계정은 모든 업무 API 차단(§4.1).</p></div>
   <div class="mock">
     <p class="hint" id="gateNotice"></p>
     <p class="hint" id="gateLoading">내 승인 상태를 확인하고 있습니다…</p>
@@ -33,7 +28,6 @@
       <div class="errbox" id="cardStopped" style="display:none"><b>접근 권한이 중지되었습니다</b><br>문의: 대표 관리자(010-XXXX-XXXX)<br>업무 화면·데이터 접근이 차단됩니다. 캐시·토큰은 로그아웃 시 정리됩니다.<br><br><button class="btn sm" type="button" id="btnLogout2">로그아웃</button></div>
     </div>
   </div>
-  <div class="spec">문구 고정(§4.2-7). owner 승인 RPC가 정원·자격 재검증 후 active 전환. 한도 초과 시 거부.</div>
 </section>
 </div>
 <script src="../js/common.js"></script>
