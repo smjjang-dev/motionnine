@@ -1,3 +1,5 @@
 # Cloudflare Pages 리다이렉트 — web/ 루트에 두고 정적 배포에 포함.
-# 루트 도메인 접속 시 실제 진입점(index.html → login.html)으로 이동.
-/ /html/index.html 302
+# 루트 도메인 접속 시 실제 진입점(login.html)으로 이동.
+# 주의: 목적지를 index.html로 두면 Cloudflare의 .html 자동 정리(clean URL)
+# 리다이렉트와 맞물려 무한루프로 판정되어 규칙이 무효 처리된다 (배포 로그로 확인).
+/ /html/login.html 302
