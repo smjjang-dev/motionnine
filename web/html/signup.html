@@ -35,27 +35,33 @@
     <div class="tabpane on" id="t-join">
       <div class="auth-box">
         <h3>관리자 가입 신청</h3>
-        <label>표시 이름 *</label><input value="홍길동">
-        <label>이메일 *</label><input value="new-admin@example.com">
+        <label for="su-name">표시 이름 *</label><input id="su-name" autocomplete="name" placeholder="홍길동">
+        <label for="su-email">이메일 *</label><input id="su-email" type="email" autocomplete="email" placeholder="name@example.com">
         <div class="f-help hint">가입 확인·승인 안내를 받는 주소. Google 계정과 동일 주소 권장(임의 병합 금지).</div>
-        <label>비밀번호 * (8자 이상)</label><input type="password" value="••••••••">
-        <button class="btn primary" style="width:100%;margin-top:12px" type="button">가입 신청</button>
-        <p class="hint">가입 → <code class="inline">app_members(role=admin, status=pending)</code> 자동 생성. 이메일 확인 전 승인 불가(§4.2-3).</p>
+        <label for="su-pw">비밀번호 * (8자 이상)</label><input id="su-pw" type="password" autocomplete="new-password" placeholder="8자 이상">
+        <div class="f-err" id="joinMsg" style="display:none"></div>
+        <button class="btn primary" style="width:100%;margin-top:12px" type="button" id="btnJoin">가입 신청</button>
+        <p class="hint">가입 → <code class="inline">motion9_members(role=admin, status=pending)</code> 자동 생성. 이메일 확인 전 승인 불가(§4.2-3).</p>
       </div>
     </div>
     <div class="tabpane" id="t-sent">
-      <div class="auth-box"><div class="okbox"><b>인증 메일을 보냈습니다.</b><br>new-admin@example.com 받은편지함(스팸함 포함)에서 24시간 내 링크를 눌러주세요.</div>
-      <button class="btn ghost" style="width:100%;margin-top:10px" type="button">인증메일 다시 받기 (58초 후 가능)</button>
+      <div class="auth-box"><div class="okbox"><b>인증 메일을 보냈습니다.</b><br><span id="sentEmail">-</span> 받은편지함(스팸함 포함)에서 24시간 내 링크를 눌러주세요.</div>
+      <input type="hidden" id="sentEmailHidden">
+      <div class="f-err" id="sentMsg" style="display:none"></div>
+      <button class="btn ghost" style="width:100%;margin-top:10px" type="button" id="btnResend">인증메일 다시 받기</button>
       <p class="hint">무료 SMTP 한도 도달 시: “잠시 후 다시 시도 + Google 로그인(연결된 경우) 안내” 표시(§4.3).</p></div>
     </div>
     <div class="tabpane" id="t-fail">
       <div class="auth-box"><div class="errbox"><b>인증 링크가 만료되었거나 이미 사용되었습니다.</b><br>사유: 만료 / 이미 인증 완료 / 다른 브라우저에서 열기(PKCE verifier 없음)</div>
-      <div class="row" style="margin-top:10px"><button class="btn primary sm" style="flex:1" type="button">새 링크 받기</button><a class="btn sm" style="flex:1" href="login.html">로그인으로 돌아가기</a></div></div>
+      <label for="failEmail" style="margin-top:10px">가입 이메일 *</label><input id="failEmail" type="email" autocomplete="email" placeholder="name@example.com">
+      <div class="f-err" id="failMsg" style="display:none"></div>
+      <div class="row" style="margin-top:10px"><button class="btn primary sm" style="flex:1" type="button" id="btnResendFail">새 링크 받기</button><a class="btn sm" style="flex:1" href="login.html">로그인으로 돌아가기</a></div></div>
     </div>
     <div class="tabpane" id="t-reset">
-      <div class="auth-box"><h3>비밀번호 재설정</h3><label>가입 이메일 *</label><input value="admin@example.com">
-      <button class="btn primary" style="width:100%;margin-top:12px" type="button">재설정 링크 보내기</button>
-      <p class="hint">성공·실패 메시지 통일. 속도 제한 적용(§4.3).</p></div>
+      <div class="auth-box"><h3>비밀번호 재설정</h3><label for="rs-email">가입 이메일 *</label><input id="rs-email" type="email" autocomplete="email" placeholder="admin@example.com">
+      <div class="f-err" id="resetMsg" style="display:none"></div>
+      <button class="btn primary" style="width:100%;margin-top:12px" type="button" id="btnReset">재설정 링크 보내기</button>
+      <p class="hint">성공·실패 메시지 통일 (“입력한 주소로 안내를 보냈습니다”). 속도 제한 적용(§4.3).</p></div>
     </div>
   </div>
   <div class="spec">경로 제안: <code class="inline">/auth/confirm</code> <code class="inline">/auth/reset</code> <code class="inline">/auth/callback</code> (§9.2).</div>
@@ -63,5 +69,8 @@
 </div>
 <script src="../js/common.js"></script>
 <script src="../js/tabs.js"></script>
+<!-- vendor: Phase 9에서 자체호스팅으로 제공 (web/vendor/supabase-js.min.js) -->
+<script src="../vendor/supabase-js.min.js"></script>
+<script type="module" src="../js/signup.js"></script>
 </body>
 </html>
