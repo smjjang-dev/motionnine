@@ -263,10 +263,13 @@ async function runExport(scope) {
         detail: { rows: live, scope, filters: { ...state } },
       }),
     );
-    // export.js(10번 단계)가 없으면 안내만 표시
+    // export.js 미응답 대비 (정상 시 export-done 또는 에러 문구가 먼저 표시됨)
+    $('pdfMsg').textContent = '';
     setTimeout(() => {
-      if (!$('pdfMsg').dataset.done) $('pdfMsg').textContent = '다운로드 모듈 연결 후(10번 단계) 저장됩니다.';
-    }, 300);
+      if (!$('pdfMsg').dataset.done && !$('pdfMsg').textContent) {
+        $('pdfMsg').textContent = '다운로드 모듈이 응답하지 않습니다. 새로고침 후 다시 시도하세요.';
+      }
+    }, 500);
   } catch (err) {
     $('pdfMsg').textContent = mapDbError(err);
   }

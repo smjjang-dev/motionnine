@@ -1,0 +1,8 @@
+# Cloudflare Pages 헤더 — web/ 루트에 두고 정적 배포에 포함.
+# CSP는 자체호스팅 스크립트만 허용. 인라인 <script> 금지 — callback.html도 js/callback.js 분리済.
+# 인라인 style="..." 속성이 전 화면에 있어 style-src 'unsafe-inline' 필요(스타일 한정).
+/html/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  X-Robots-Tag: noindex

@@ -22,21 +22,8 @@
   </div>
 </section>
 </div>
-<!-- vendor: Phase 9에서 자체호스팅으로 제공 (web/vendor/supabase-js.min.js) -->
+<!-- vendor 자체호스팅 (web/vendor/supabase-js.min.js) -->
 <script src="../vendor/supabase-js.min.js"></script>
-<script type="module">
-import { handleCallback } from '../js/auth.js';
-try {
-  await handleCallback();
-} catch (err) {
-  document.getElementById('cbMsg').textContent = '로그인 처리에 실패했습니다. 로그인 화면으로 돌아가세요.';
-  const a = document.createElement('a');
-  a.href = 'login.html';
-  a.className = 'btn primary';
-  a.style.cssText = 'width:100%;margin-top:12px;display:block;text-align:center';
-  a.textContent = '로그인으로 돌아가기';
-  document.querySelector('.auth-box').appendChild(a);
-}
-</script>
+<script type="module" src="../js/callback.js"></script>
 </body>
 </html>

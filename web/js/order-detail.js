@@ -83,10 +83,14 @@ function renderAudit(logs) {
 }
 
 function requestExport(format, row) {
+  $('dlMsg').textContent = '생성 중…';
   document.dispatchEvent(new CustomEvent('motion9:export-detail', { detail: { format, row } }));
+  // export.js 미응답 대비 (정상 시 export-done 또는 에러 문구가 먼저 표시됨)
   setTimeout(() => {
-    if (!$('dlMsg').dataset.done) $('dlMsg').textContent = '다운로드 모듈 연결 후(10번 단계) 저장됩니다.';
-  }, 300);
+    if (!$('dlMsg').dataset.done && $('dlMsg').textContent === '생성 중…') {
+      $('dlMsg').textContent = '다운로드 모듈이 응답하지 않습니다. 새로고침 후 다시 시도하세요.';
+    }
+  }, 500);
 }
 
 async function init() {
