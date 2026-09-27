@@ -26,41 +26,43 @@
   <div class="screen-head"><span class="badge">W-04 · 핵심</span><h2>발주 목록 (검색·필터·집계·페이지)</h2>
   <p class="sub">§5.2 그대로 + 모바일 카드. 단계 건수는 단계 필터 적용 전 분포 표시.</p></div>
   <div class="mock">
-    <div class="bar"><span class="b-logo">[모션나인 발주관리]</span><span class="hint" style="color:#cbd5e1">발주목록</span><span class="b-user">김관리(owner) · 로그아웃</span></div>
+    <p class="hint" id="noticeBar" style="display:none"></p>
+    <div class="bar"><span class="b-logo">[모션나인 발주관리]</span><span class="hint" style="color:#cbd5e1">발주목록</span><span class="b-user"><span id="userLabel">-</span> · <button class="btn sm" type="button" id="btnLogout" style="min-height:0;padding:2px 8px">로그아웃</button></span></div>
     <div class="stage-cards">
-      <div class="stage s1"><b>12</b><span>접수(1)</span></div>
-      <div class="stage s2"><b>8</b><span>준비(2)</span></div>
-      <div class="stage s3"><b>5</b><span>발송(3)</span></div>
-      <div class="stage s9"><b>31</b><span>완료(9)</span></div>
+      <div class="stage s1" data-stage="1"><b id="cnt1">-</b><span>접수(1)</span></div>
+      <div class="stage s2" data-stage="2"><b id="cnt2">-</b><span>준비(2)</span></div>
+      <div class="stage s3" data-stage="3"><b id="cnt3">-</b><span>발송(3)</span></div>
+      <div class="stage s9" data-stage="9"><b id="cnt9">-</b><span>완료(9)</span></div>
     </div>
     <div class="filter">
-      <input class="grow" value="검색: 거래처·주문자·제품·제품코드·발주번호 (예: A상사 / 김주문 / A01 / 20260927-00001)">
-      <button class="btn primary sm" type="button">검색</button>
-      <input type="date" value="2026-09-01" style="max-width:160px"> ~ <input type="date" value="2026-09-27" style="max-width:160px">
-      <select style="max-width:150px"><option>발송단계: 전체</option><option>접수</option><option>준비</option><option>발송</option><option>완료</option></select>
-      <button class="btn ghost sm" type="button">초기화</button>
-      <button class="btn sm" type="button">PDF(목록 내보내기)</button>
+      <input class="grow" id="q" placeholder="검색: 거래처·주문자·제품·제품코드·발주번호">
+      <button class="btn primary sm" type="button" id="btnSearch">검색</button>
+      <input type="date" id="fromDate" style="max-width:160px"> ~ <input type="date" id="toDate" style="max-width:160px">
+      <select id="stageSel" style="max-width:150px"><option value="">발송단계: 전체</option><option value="1">접수</option><option value="2">준비</option><option value="3">발송</option><option value="9">완료</option></select>
+      <button class="btn ghost sm" type="button" id="btnReset">초기화</button>
+      <button class="btn sm" type="button" id="btnPdf">PDF(목록 내보내기)</button>
       <a class="btn primary sm" href="order-form.html">+ 발주 등록</a>
     </div>
     <p class="hint">집계 기준: 검색어·기간 적용, 단계 필터 제외 · 날짜 필터 KST 00:00~익일00:00 · 정렬: 발주일↓+ID↓ · 20건/페이지(50건 선택)</p>
-    <table class="grid desktop-only">
-      <tr><th>발주번호</th><th>발주일(KST)</th><th>거래처</th><th>주문자</th><th>제품/코드</th><th class="num">수량</th><th class="num">합계(청구액)</th><th>단계</th></tr>
-      <tr><td><a href="order-detail.html">20260927-00001</a></td><td>09/27 10:30</td><td>A상사</td><td>김주문</td><td>제품A / A01</td><td class="num">10</td><td class="num">100,000</td><td><span class="pill p1">접수</span></td></tr>
-      <tr><td><a href="order-detail.html">20260927-00002</a></td><td>09/27 09:12</td><td>B유통</td><td>이주문</td><td>긴 제품명은 목록에서 줄여 표시… / B02</td><td class="num">50</td><td class="num">512,500</td><td><span class="pill p2">준비</span></td></tr>
-      <tr><td><a href="order-detail.html">20260926-00015</a></td><td>09/26 16:40</td><td>C마트</td><td>박주문</td><td>제품C / C03</td><td class="num">100</td><td class="num">1,130,000</td><td><span class="pill p3">발송</span></td></tr>
-      <tr><td><a href="order-detail.html">20260925-00009</a></td><td>09/25 11:05</td><td>A상사</td><td>최주문</td><td>제품D / D04</td><td class="num">20</td><td class="num">226,000</td><td><span class="pill p9">완료</span></td></tr>
+    <div id="stateBox"></div>
+    <table class="grid desktop-only" id="orderTable">
+      <thead><tr><th>발주번호</th><th>발주일(KST)</th><th>거래처</th><th>주문자</th><th>제품/코드</th><th class="num">수량</th><th class="num">합계(청구액)</th><th>단계</th></tr></thead>
+      <tbody id="orderRows"></tbody>
     </table>
-    <div class="cards-m">
-      <div class="ocard"><div class="t1"><span>20260927-00001</span><span class="pill p1">접수</span></div><div class="t2">A상사 · 김주문 · 제품A/A01 · 10개</div><div class="t3"><span>09/27 10:30</span><b>100,000원</b></div></div>
-      <div class="ocard"><div class="t1"><span>20260927-00002</span><span class="pill p2">준비</span></div><div class="t2">B유통 · 이주문 · 제품B/B02 · 50개</div><div class="t3"><span>09/27 09:12</span><b>512,500원</b></div></div>
-    </div>
-    <div class="pager"><button class="btn sm" type="button">이전</button><button class="btn sm dark" type="button">1</button><button class="btn sm" type="button">2</button><button class="btn sm" type="button">다음</button>
-    <select class="btn sm"><option>20건</option><option>50건</option></select></div>
+    <div class="cards-m" id="orderCards"></div>
+    <div class="pager" id="pager"></div>
+    <div class="modal" id="pdfModal" style="display:none"><b>목록 PDF 내보내기</b><br>
+      <span id="pdfInfo">-</span><br>
+      <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary sm" type="button" id="btnPdfPage">현재 페이지</button><button class="btn dark sm" type="button" id="btnPdfAll">조건 전체(최대 200건)</button><button class="btn ghost sm" type="button" id="btnPdfCancel">취소</button></div>
+      <p class="hint" id="pdfMsg"></p></div>
     <div class="anno"><b>상태 분기:</b> ① 결과 없음 — “조건에 맞는 발주가 없습니다. [필터 초기화]” ② 로딩 — 스켈레톤 행 ③ 실패 — “불러오지 못했습니다. [재시도]”. PDF 클릭 시 범위 확인 모달: “현재 조건 전체 N건 중 최대 200건 [현재 페이지 / 조건 전체]”(§10.3).</div>
   </div>
   <div class="spec">검색 대상 6개(거래처·주문자·연락처·제품·코드·번호) OR 부분일치, 특수문자 escape(§6.6). 수량·금액 우측 정렬. 삭제건은 목록·검색·집계 제외.</div>
 </section>
 </div>
 <script src="../js/common.js"></script>
+<!-- vendor: Phase 9에서 자체호스팅으로 제공 (web/vendor/supabase-js.min.js) -->
+<script src="../vendor/supabase-js.min.js"></script>
+<script type="module" src="../js/order-list.js"></script>
 </body>
 </html>
