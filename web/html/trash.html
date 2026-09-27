@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<title>W-08 삭제내역 — 모션나인 와이어프레임</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="logo" href="index.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
+  <span class="ver">W-08 삭제내역</span>
+  <nav class="topnav">
+    <a href="index.html">허브</a><a href="login.html">01 로그인</a><a href="signup.html">02 가입·인증</a><a href="pending.html">03 승인대기</a><a href="orders.html">04 목록</a><a href="order-form.html">05 등록·수정</a><a href="order-detail.html">06 상세</a><a href="admin.html">07 관리자</a><a href="trash.html" class="active">08 삭제내역</a>
+  </nav>
+  <div class="spacer"></div>
+  <div class="toggle"><button id="btnPc" class="on" type="button">PC</button><button id="btnMo" type="button">모바일</button></div>
+</div>
+<div class="wrap" id="wrap">
+<div class="phone-note">모바일 미리보기 모드입니다.</div>
+<section class="screen">
+  <div class="screen-head"><span class="badge">W-08</span><h2>삭제 내역 (owner 전용 · 복원)</h2>
+  <p class="sub">논리 삭제건 조회·복원. 번호·이력 유지, 복원 시 deleted 필드만 해제(§6.4).</p></div>
+  <div class="mock">
+    <div class="bar"><span class="b-logo">삭제 내역</span><span class="b-user">owner 전용</span></div>
+    <table class="grid desktop-only" style="margin-top:12px"><tr><th>발주번호</th><th>거래처·제품</th><th>삭제시각·삭제자</th><th>사유</th><th>복원</th></tr>
+    <tr><td>20260920-00004</td><td>D상사 · 제품X</td><td>09/21 14:00 김관리</td><td>중복 등록</td><td><button class="btn primary sm">복원</button></td></tr></table>
+    <div class="cards-m"><div class="ocard"><div class="t1"><span>20260920-00004</span><span class="pill p-stop">삭제됨</span></div><div class="t2">D상사 · 제품X · 사유: 중복 등록</div><div class="t3"><span>09/21 김관리</span><button class="btn primary sm">복원</button></div></div></div>
+    <p class="hint">일반 admin은 이 화면·복원 RPC 접근 불가. 복원도 version 증가 + 감사 로그 기록. 영구 삭제는 웹 UI 미제공(§4.1).</p>
+  </div>
+  <div class="spec">삭제 후 일반 목록/검색/집계에서 제외 확인 → 복원 후 동일 번호·금액·이력 유지(수용테스트 §12.1).</div>
+</section>
+</div>
+<script src="../js/common.js"></script>
+</body>
+</html>

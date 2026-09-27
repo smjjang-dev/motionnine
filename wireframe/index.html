@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>모션나인 발주현황 — 와이어프레임 v1.1</title>
+<style>
+:root{
+  --navy:#1b2a4a; --navy2:#24365e; --teal:#0e9b9b; --teal-d:#0b7f7f;
+  --bg:#f4f6f9; --card:#ffffff; --line:#dfe5ee; --txt:#1e293b; --muted:#64748b;
+  --gray-st:#64748b; --orange-st:#e67e22; --blue-st:#2563eb; --green-st:#16a34a;
+  --danger:#dc2626; --radius:12px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;font-size:16px;line-height:1.55}
+a{color:var(--teal-d)}
+.topbar{position:sticky;top:0;z-index:50;background:var(--navy);color:#fff;padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.topbar .logo{font-weight:800;font-size:17px;letter-spacing:-.3px}
+.topbar .ver{font-size:12px;background:#ffffff22;border:1px solid #ffffff44;padding:2px 8px;border-radius:20px}
+.topnav{display:flex;gap:6px;flex-wrap:wrap}
+.topnav a{color:#dbe4f3;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid transparent}
+.topnav a:hover{background:#ffffff18;border-color:#ffffff33;color:#fff}
+.topbar .spacer{flex:1}
+.toggle{display:flex;background:#ffffff1c;border-radius:10px;padding:3px;gap:3px}
+.toggle button{border:0;border-radius:7px;padding:7px 12px;font-size:13px;cursor:pointer;background:transparent;color:#cbd5e1;min-height:36px}
+.toggle button.on{background:#fff;color:var(--navy);font-weight:700}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 80px}
+.wrap.mobile-mode{max-width:430px}
+.hero{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.hero h1{margin:0 0 6px;font-size:22px}
+.hero p{margin:6px 0;color:var(--muted);font-size:14px}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:14px}
+.legend .li{background:#f8fafc;border:1px dashed var(--line);border-radius:10px;padding:10px;font-size:13px}
+.flow{margin-top:12px;background:#0f2040;color:#dbe7ff;border-radius:10px;padding:12px 14px;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;white-space:pre-wrap}
+.screen{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-top:22px;overflow:hidden}
+.screen-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;background:#fbfdff}
+.badge{font-size:12px;font-weight:800;background:var(--navy);color:#fff;border-radius:7px;padding:4px 9px;white-space:nowrap}
+.screen-head h2{margin:0;font-size:19px}
+.screen-head .sub{width:100%;color:var(--muted);font-size:13.5px;margin:2px 0 0}
+.spec{font-size:12.5px;background:#f1f5f9;border-top:1px dashed var(--line);padding:10px 18px;color:#475569}
+.mock{padding:18px}
+.phone-note{display:none;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:12px}
+.wrap.mobile-mode .phone-note{display:block}
+/* generic mock ui */
+.bar{background:var(--navy);color:#fff;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bar .b-logo{font-weight:800}
+.bar .b-user{margin-left:auto;font-size:13px;background:#ffffff20;padding:6px 10px;border-radius:8px}
+.btn{border:1px solid var(--line);background:#fff;border-radius:9px;padding:10px 14px;font-size:14px;cursor:pointer;min-height:44px}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700}
+.btn.primary:hover{background:var(--teal-d)}
+.btn.dark{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.ghost{background:#f8fafc}
+.btn.danger{background:#fef2f2;border-color:#fecaca;color:var(--danger)}
+.btn.google{background:#fff;border-color:#cbd5e1;font-weight:700}
+.btn.sm{min-height:36px;padding:6px 10px;font-size:13px}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.stage-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.stage{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center}
+.stage b{font-size:20px;display:block}
+.stage span{font-size:13px;color:var(--muted)}
+.stage.s1 b{color:var(--gray-st)} .stage.s2 b{color:var(--orange-st)} .stage.s3 b{color:var(--blue-st)} .stage.s9 b{color:var(--green-st)}
+.filter{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filter input,.filter select,.form input,.form select,.form textarea{border:1px solid #cbd5e1;border-radius:8px;padding:10px 11px;font-size:15px;min-height:44px;width:100%;background:#fff}
+.filter .grow{flex:1;min-width:200px}
+table.grid{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+table.grid th,table.grid td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left}
+table.grid th{background:#f1f5f9;font-size:12.5px;color:#475569;white-space:nowrap}
+table.grid td.num,table.grid th.num{text-align:right;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:12px;font-weight:800;padding:3px 9px;border-radius:20px;color:#fff;white-space:nowrap}
+.p1{background:var(--gray-st)} .p2{background:var(--orange-st)} .p3{background:var(--blue-st)} .p9{background:var(--green-st)}
+.p-pend{background:#a855f7} .p-stop{background:#dc2626}
+.pager{display:flex;gap:6px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.cards-m{display:none}
+.auth-box{max-width:440px;margin:14px auto;border:1px solid var(--line);border-radius:12px;padding:20px;background:#fff}
+.auth-box h3{margin:0 0 4px;text-align:center}
+.auth-box .logo-big{text-align:center;font-size:22px;font-weight:900;color:var(--navy);margin-bottom:2px}
+.auth-box label{font-size:13px;font-weight:700;display:block;margin:12px 0 6px}
+.auth-box .row{display:flex;gap:8px}
+.hint{font-size:12.5px;color:var(--muted)}
+.err{font-size:13px;color:var(--danger);margin-top:6px}
+.okbox{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px;font-size:14px}
+.warnbox{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px;font-size:14px}
+.errbox{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px;font-size:14px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.tabs button{border:1px solid var(--line);background:#f8fafc;border-radius:9px;padding:9px 12px;min-height:44px;cursor:pointer;font-size:13.5px}
+.tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:700}
+.tabpane{display:none;border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff}
+.tabpane.on{display:block}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form .full{grid-column:1/-1}
+.form .fld label{font-size:13px;font-weight:700;display:block;margin-bottom:6px}
+.req{color:var(--danger)}
+.f-err{font-size:12.5px;color:var(--danger);margin-top:5px}
+.f-help{font-size:12.5px;color:var(--muted);margin-top:5px}
+.summary{border:1px solid var(--line);border-radius:10px;background:#f8fafc;padding:14px}
+.summary h4{margin:0 0 8px;font-size:14px}
+.summary table{width:100%;border-collapse:collapse;font-size:13.5px}
+.summary td{padding:5px 0;border-bottom:1px dashed #e2e8f0}
+.summary td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.summary .total td{font-weight:800;font-size:15px;border-bottom:0}
+.kv{display:grid;grid-template-columns:140px 1fr;gap:6px 10px;font-size:14px}
+.kv dt{color:var(--muted)} .kv dd{margin:0}
+.timeline{border-left:3px solid var(--line);margin:12px 0 0 6px;padding-left:14px;display:grid;gap:10px;font-size:13.5px}
+.modal{border:2px dashed var(--navy);border-radius:12px;padding:14px;background:#fbfdff;margin-top:12px}
+.quota{height:12px;background:#e2e8f0;border-radius:20px;overflow:hidden}
+.quota i{display:block;height:100%;background:var(--teal)}
+.anno{margin-top:14px;border-top:1px dashed var(--line);padding-top:10px;font-size:12.8px;color:#475569}
+.anno b{color:var(--navy)}
+.foot{margin-top:26px;font-size:13px;color:var(--muted)}
+code.inline{background:#eef2f7;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:12.5px}
+/* responsive */
+@media(max-width:991px){
+  .stage-cards{grid-template-columns:repeat(2,1fr)}
+  .form{grid-template-columns:1fr 1fr}
+}
+@media(max-width:767px){
+  body{font-size:16px}
+  table.grid.desktop-only{display:none}
+  .cards-m{display:grid;gap:10px;margin-top:12px}
+  .ocard{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff}
+  .ocard .t1{display:flex;justify-content:space-between;gap:8px;font-weight:800;font-size:14px}
+  .ocard .t2{font-size:13.5px;color:#334155;margin-top:4px}
+  .ocard .t3{display:flex;justify-content:space-between;margin-top:8px;font-size:13px;color:var(--muted)}
+  .form{grid-template-columns:1fr}
+  .sticky-save{position:sticky;bottom:0;background:#ffffffee;border-top:1px solid var(--line);padding:10px;margin:14px -18px -18px;display:flex;gap:8px}
+  .sticky-save .btn{flex:1}
+  .kv{grid-template-columns:110px 1fr}
+}
+.wrap.mobile-mode table.grid.desktop-only{display:none}
+.wrap.mobile-mode .cards-m{display:grid;gap:10px;margin-top:12px}
+.wrap.mobile-mode .ocard{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff}
+.wrap.mobile-mode .ocard .t1{display:flex;justify-content:space-between;gap:8px;font-weight:800;font-size:14px}
+.wrap.mobile-mode .ocard .t2{font-size:13.5px;color:#334155;margin-top:4px}
+.wrap.mobile-mode .ocard .t3{display:flex;justify-content:space-between;margin-top:8px;font-size:13px;color:var(--muted)}
+.wrap.mobile-mode .form{grid-template-columns:1fr}
+@media print{.topbar,.toggle,.tabs{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">모션나인 발주관리</div><span class="ver">WIREFRAME v1.1 · 기획설계서 §5 기반</span>
+  <nav class="topnav" aria-label="화면 이동">
+    <a href="#w01">01 로그인</a><a href="#w02">02 가입·인증</a><a href="#w03">03 승인대기</a>
+    <a href="#w04">04 목록</a><a href="#w05">05 등록·수정</a><a href="#w06">06 상세</a>
+    <a href="#w07">07 관리자</a><a href="#w08">08 삭제내역</a>
+  </nav>
+  <div class="spacer"></div>
+  <div class="toggle" role="group" aria-label="미리보기">
+    <button id="btnPc" class="on" type="button">PC 미리보기</button>
+    <button id="btnMo" type="button">모바일(767px) 미리보기</button>
+  </div>
+</div>
+
+<div class="wrap" id="wrap">
+<div class="phone-note">모바일 미리보기 모드입니다. 목록은 카드형, 입력/상세는 1열 + 하단 고정 저장 버튼으로 바뀝니다(§5.4).</div>
+
+<div class="hero">
+  <h1>발주현황 관리 — 화면 와이어프레임 (총 8화면)</h1>
+  <p>기준 문서: <code class="inline">docs/모션나인_발주현황_기획설계서.md v1.1 (2026-09-27)</code> · 대상: 관리자 3~5명, PC·스마트폰 반응형 · 이 파일은 구현 전 화면 합의용입니다. 모든 버튼은 더미(동작 없음)이며, 실제 데이터·인증은 연결되지 않았습니다.</p>
+  <div class="legend">
+    <div class="li"><b>색 규칙(§5.4 제안)</b><br>헤더 진네이비 · 주버튼 청록 · 접수 <span class="pill p1">회색</span> 준비 <span class="pill p2">주황</span> 발송 <span class="pill p3">파랑</span> 완료 <span class="pill p9">초록</span></div>
+    <div class="li"><b>공통 규칙</b><br>· 기본 정렬: 발주일 내림차순 + ID 내림차순<br>· 페이지 20건(선택 50건), 최대 50건<br>· 검색 버튼/Enter 실행, 서버 검색</div>
+    <div class="li"><b>번호·금액 규칙</b><br>· 발주번호 <code class="inline">YYYYMMDD-5자리</code> 읽기전용<br>· 수량×단가 → 공급가·VAT·합계는 서버 확정, 화면은 미리보기</div>
+    <div class="li"><b>보는 법</b><br>· 각 화면 하단 회색 박스 = 설계 근거·예외 상태<br>· 상단 토글로 PC/모바일 전환<br>· 인쇄(Ctrl+P) 시 A4 검토용</div>
+  </div>
+  <div class="flow">로그인 → (미승인) 승인대기 → (승인·활성) 발주목록 ⇄ 등록 ⇄ 상세 ⇄ 수정/삭제
+                                   ↘ (owner) 관리자설정 · 삭제내역(복원)
+가입: 이메일가입→메일인증→pending / Google인증→pending → owner 승인 → active</div>
+</div>
+
+<!-- ============ W01 ============ -->
+<section class="screen" id="w01">
+  <div class="screen-head"><span class="badge">W-01</span><h2>로그인</h2>
+  <p class="sub">Google 버튼 · 이메일 로그인 · 가입 / 비밀번호 재설정 진입. 정적 HTML 자체는 열람 가능, 업무 데이터는 활성 관리자만(§4.1).</p></div>
+  <div class="mock">
+    <div class="auth-box">
+      <div class="logo-big">모션나인</div>
+      <h3>발주현황 관리 로그인</h3>
+      <p class="hint" style="text-align:center">관리자 전용 · 내부용 (noindex)</p>
+      <button class="btn google" style="width:100%;margin-top:10px" type="button">G Google로 계속하기</button>
+      <div class="hint" style="text-align:center;margin:10px 0">또는</div>
+      <label for="li-email">이메일 *</label>
+      <input id="li-email" value="admin@example.com">
+      <label for="li-pw">비밀번호 *</label>
+      <input id="li-pw" type="password" value="••••••••">
+      <div class="err">예시: 비밀번호가 일치하지 않습니다. (실제 문구는 통일형 사용 §4.3)</div>
+      <button class="btn primary" style="width:100%;margin-top:12px" type="button">이메일로 로그인</button>
+      <div class="row" style="margin-top:10px">
+        <button class="btn ghost sm" style="flex:1" type="button">회원가입</button>
+        <button class="btn ghost sm" style="flex:1" type="button">비밀번호 재설정</button>
+      </div>
+      <p class="hint">· Apple 로그인은 범위 제외(§4.3)<br>· 매 로그인마다 메일 발송 없음. 확인·재설정 메일에만 무료 SMTP 사용(§14.3)<br>· 실패 시 계정 존재 여부 과다 노출 금지</p>
+    </div>
+  </div>
+  <div class="spec">설계 근거 §4.2~§4.4, §5.1 · PKCE OAuth 콜백 / Confirm-email / redirect allowlist는 구현 단계에서 연결. 이메일 입력란 자동완성·비밀번호 보기 토글은 상세설계에서 추가.</div>
+</section>
+
+<!-- ============ W02 ============ -->
+<section class="screen" id="w02">
+  <div class="screen-head"><span class="badge">W-02</span><h2>가입 · 이메일 인증 · 비밀번호 재설정</h2>
+  <p class="sub">탭을 눌러 4가지 상태를 확인. 가입 직후 role/status는 서버가 pending/admin으로 강제(§4.2).</p></div>
+  <div class="mock">
+    <div class="tabs">
+      <button class="on" data-t="t-join" type="button">① 이메일 가입 폼</button>
+      <button data-t="t-sent" type="button">② 인증메일 발송됨</button>
+      <button data-t="t-fail" type="button">③ 만료·실패·재전송</button>
+      <button data-t="t-reset" type="button">④ 비밀번호 재설정</button>
+    </div>
+    <div class="tabpane on" id="t-join">
+      <div class="auth-box">
+        <h3>관리자 가입 신청</h3>
+        <label>표시 이름 *</label><input value="홍길동">
+        <label>이메일 *</label><input value="new-admin@example.com">
+        <div class="f-help">가입 확인·승인 안내를 받는 주소. Google 계정과 동일 주소 권장(임의 병합 금지).</div>
+        <label>비밀번호 * (8자 이상)</label><input type="password" value="••••••••">
+        <button class="btn primary" style="width:100%;margin-top:12px" type="button">가입 신청</button>
+        <p class="hint">가입 → <code class="inline">app_members(role=admin, status=pending)</code> 자동 생성. 이메일 확인 전 승인 불가(§4.2-3).</p>
+      </div>
+    </div>
+    <div class="tabpane" id="t-sent">
+      <div class="auth-box"><div class="okbox"><b>인증 메일을 보냈습니다.</b><br>new-admin@example.com 받은편지함(스팸함 포함)에서 24시간 내 링크를 눌러주세요.</div>
+      <button class="btn ghost" style="width:100%;margin-top:10px" type="button">인증메일 다시 받기 (58초 후 가능)</button>
+      <p class="hint">무료 SMTP 한도 도달 시: “잠시 후 다시 시도 + Google 로그인(연결된 경우) 안내” 표시(§4.3).</p></div>
+    </div>
+    <div class="tabpane" id="t-fail">
+      <div class="auth-box"><div class="errbox"><b>인증 링크가 만료되었거나 이미 사용되었습니다.</b><br>사유: 만료 / 이미 인증 완료 / 다른 브라우저에서 열기(PKCE verifier 없음)</div>
+      <div class="row" style="margin-top:10px"><button class="btn primary sm" style="flex:1" type="button">새 링크 받기</button><button class="btn sm" style="flex:1" type="button">로그인으로 돌아가기</button></div></div>
+    </div>
+    <div class="tabpane" id="t-reset">
+      <div class="auth-box"><h3>비밀번호 재설정</h3><label>가입 이메일 *</label><input value="admin@example.com">
+      <button class="btn primary" style="width:100%;margin-top:12px" type="button">재설정 링크 보내기</button>
+      <p class="hint">성공·실패 메시지 통일 (“입력한 주소로 안내를 보냈습니다”). 속도 제한 적용(§4.3).</p></div>
+    </div>
+  </div>
+  <div class="spec">경로 제안: <code class="inline">/auth/confirm</code> <code class="inline">/auth/reset</code> <code class="inline">/auth/callback</code> (§9.2). 다른 브라우저 오픈 시 재시작 안내 또는 token-hash 흐름 사용(§11.2-7).</div>
+</section>
+
+<!-- ============ W03 ============ -->
+<section class="screen" id="w03">
+  <div class="screen-head"><span class="badge">W-03</span><h2>승인 대기 · 접근 중지</h2>
+  <p class="sub">본인 상태만 표시 + 로그아웃. 미승인/중지 계정은 모든 업무 API 차단(§4.1, 수용테스트).</p></div>
+  <div class="mock">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
+      <div class="warnbox"><b>관리자 승인 대기 중</b><br>홍길동(new-admin@example.com) · 상태: <span class="pill p-pend">pending</span><br>대표 관리자에게 승인 요청이 전달되었습니다. 승인 후 발주 메뉴를 사용할 수 있습니다.<br><br><button class="btn sm" type="button">로그아웃</button> <button class="btn ghost sm" type="button">내 상태 다시 확인</button></div>
+      <div class="errbox"><b>접근 권한이 중지되었습니다</b><br>문의: 대표 관리자(010-XXXX-XXXX)<br>업무 화면·데이터 접근이 차단됩니다. 캐시·토큰은 로그아웃 시 정리됩니다.<br><br><button class="btn sm" type="button">로그아웃</button></div>
+    </div>
+  </div>
+  <div class="spec">문구 고정(§4.2-7). owner 승인 RPC가 정원·자격 재검증 후 active 전환. 한도 초과 시 거부 + 재활성화에도 동일 검사.</div>
+</section>
+
+<!-- ============ W04 ============ -->
+<section class="screen" id="w04">
+  <div class="screen-head"><span class="badge">W-04 · 핵심</span><h2>발주 목록 (검색·필터·집계·페이지)</h2>
+  <p class="sub">§5.2 와이어프레임 그대로 + 모바일 카드. 단계 건수는 단계 필터 적용 전 분포 표시.</p></div>
+  <div class="mock">
+    <div class="bar"><span class="b-logo">[모션나인 발주관리]</span><span class="hint" style="color:#cbd5e1">발주목록</span><span class="b-user">김관리(owner) · 로그아웃</span></div>
+    <div class="stage-cards">
+      <div class="stage s1"><b>12</b><span>접수(1)</span></div>
+      <div class="stage s2"><b>8</b><span>준비(2)</span></div>
+      <div class="stage s3"><b>5</b><span>발송(3)</span></div>
+      <div class="stage s9"><b>31</b><span>완료(9)</span></div>
+    </div>
+    <div class="filter">
+      <input class="grow" value="검색: 거래처·주문자·제품·제품코드·발주번호 (예: A상사 / 김주문 / A01 / 20260927-00001)">
+      <button class="btn primary sm" type="button">검색</button>
+      <input type="date" value="2026-09-01" style="max-width:160px"> ~ <input type="date" value="2026-09-27" style="max-width:160px">
+      <select style="max-width:150px"><option>발송단계: 전체</option><option>접수</option><option>준비</option><option>발송</option><option>완료</option></select>
+      <button class="btn ghost sm" type="button">초기화</button>
+      <button class="btn sm" type="button">PDF(목록 내보내기)</button>
+      <button class="btn primary sm" type="button">+ 발주 등록</button>
+    </div>
+    <p class="hint">집계 기준: 검색어·기간 적용, 단계 필터 제외 · 날짜 필터 KST 00:00~익일00:00 · 정렬: 발주일↓+ID↓ · 20건/페이지(50건 선택)</p>
+    <table class="grid desktop-only">
+      <tr><th>발주번호</th><th>발주일(KST)</th><th>거래처</th><th>주문자</th><th>제품/코드</th><th class="num">수량</th><th class="num">합계(청구액)</th><th>단계</th></tr>
+      <tr><td><a href="#w06">20260927-00001</a></td><td>09/27 10:30</td><td>A상사</td><td>김주문</td><td>제품A / A01</td><td class="num">10</td><td class="num">100,000</td><td><span class="pill p1">접수</span></td></tr>
+      <tr><td><a href="#w06">20260927-00002</a></td><td>09/27 09:12</td><td>B유통</td><td>이주문</td><td>긴 제품명은 목록에서 줄여 표시… / B02</td><td class="num">50</td><td class="num">512,500</td><td><span class="pill p2">준비</span></td></tr>
+      <tr><td><a href="#w06">20260926-00015</a></td><td>09/26 16:40</td><td>C마트</td><td>박주문</td><td>제품C / C03</td><td class="num">100</td><td class="num">1,130,000</td><td><span class="pill p3">발송</span></td></tr>
+      <tr><td><a href="#w06">20260925-00009</a></td><td>09/25 11:05</td><td>A상사</td><td>최주문</td><td>제품D / D04</td><td class="num">20</td><td class="num">226,000</td><td><span class="pill p9">완료</span></td></tr>
+    </table>
+    <div class="cards-m">
+      <div class="ocard"><div class="t1"><span>20260927-00001</span><span class="pill p1">접수</span></div><div class="t2">A상사 · 김주문 · 제품A/A01 · 10개</div><div class="t3"><span>09/27 10:30</span><b>100,000원</b></div></div>
+      <div class="ocard"><div class="t1"><span>20260927-00002</span><span class="pill p2">준비</span></div><div class="t2">B유통 · 이주문 · 제품B/B02 · 50개</div><div class="t3"><span>09/27 09:12</span><b>512,500원</b></div></div>
+    </div>
+    <div class="pager"><button class="btn sm" type="button">이전</button><button class="btn sm dark" type="button">1</button><button class="btn sm" type="button">2</button><button class="btn sm" type="button">다음</button>
+    <select class="btn sm"><option>20건</option><option>50건</option></select></div>
+    <div class="anno"><b>상태 분기(목록 하단 공통):</b> ① 결과 없음 — “조건에 맞는 발주가 없습니다. [필터 초기화]” ② 로딩 — 스켈레톤 행 ③ 네트워크 실패 — “목록을 불러오지 못했습니다. [재시도]”. PDF 버튼 클릭 시 범위 확인 모달: “현재 조건 전체 N건 중 최대 200건 내보내기 [현재 페이지 / 조건 전체]”(§10.3).</div>
+  </div>
+  <div class="spec">검색 대상 6개(거래처·주문자·연락처·제품·코드·번호) OR 부분일치, 특수문자 escape(§6.6). 수량·금액 우측 정렬. 삭제건은 일반 목록·검색·집계에서 제외(§12.1).</div>
+</section>
+
+<!-- ============ W05 ============ -->
+<section class="screen" id="w05">
+  <div class="screen-head"><span class="badge">W-05 · 핵심</span><h2>발주 등록 / 수정</h2>
+  <p class="sub">입력 순서: 거래처 → 주문자·연락처·이메일 → 제품 → 수량·MOQ·단가 → 세금·배송 → 발주일·단계 → 합계 확인(§5.3). 발주번호·등록정보는 읽기전용.</p></div>
+  <div class="mock">
+    <div class="bar"><span class="b-logo">발주 등록</span><span class="b-user">임시 요청ID: 8f3a… (중복등록 방지 §8.1)</span></div>
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-top:12px" class="formwrap">
+    <div class="form">
+      <div class="fld full"><label>발주번호 (자동, 읽기전용)</label><input disabled value="저장 시 발급 — 예: 20260927-00003"><div class="f-help">번호 날짜 = 최초 등록 시점의 한국 날짜. 소급 발주일과 다를 수 있음(§8.1).</div></div>
+      <div class="fld"><label>거래처명 <span class="req">*</span></label><input value="A상사"><div class="f-err" style="display:none">예시: 거래처명을 입력하세요.</div></div>
+      <div class="fld"><label>주문자 <span class="req">*</span></label><input value="김주문"></div>
+      <div class="fld"><label>주문자 연락처(휴대폰) <span class="req">*</span></label><input value="010-1234-5678" placeholder="010-1234-5678"><div class="f-help">예: 010-1234-5678 (하이픈 선택).</div></div>
+      <div class="fld"><label>주문자 이메일 (선택)</label><input value="" placeholder="name@example.com"><div class="f-help">빈 값은 미저장.</div></div>
+      <div class="fld"><label>발주일(KST) <span class="req">*</span></label><input type="datetime-local" value="2026-09-27T10:30"><div class="f-help">미지정 시 서버 현재시각. 초기값은 서버시각 RPC.</div></div>
+      <div class="fld"><label>제품명 <span class="req">*</span></label><input value="제품A"></div>
+      <div class="fld"><label>제품코드 <span class="req">*</span> (발주 간 중복 허용)</label><input value="A01"></div>
+      <div class="fld full"><label>옵션</label><textarea rows="2">색상: 화이트 / 추가 포장</textarea><div class="f-help">빈 값은 NULL 저장.</div></div>
+      <div class="fld"><label>수량 <span class="req">*</span> (1~1,000,000 정수)</label><input id="f-qty" type="number" value="10"></div>
+      <div class="fld"><label>MOQ (선택, 입력 시 수량 ≥ MOQ)</label><input type="number" value="5"></div>
+      <div class="fld"><label>단가(원) <span class="req">*</span> (0~10억, 기본값 없음)</label><input id="f-price" type="number" value="10000"></div>
+      <div class="fld"><label>부가세 별도</label><select id="f-vat"><option value="N" selected>N — 단가에 VAT 포함</option><option value="Y">Y — 단가에 VAT 별도</option></select></div>
+      <div class="fld"><label>배송비 포함</label><select id="f-ship"><option value="Y" selected>Y — 상품금액에 포함 (추가청구 0원)</option><option value="N">N — 별도 청구</option></select><div class="f-help">명칭 확정 필요(§3.2): Y/N + 설명 병기.</div></div>
+      <div class="fld"><label>배송비(원, VAT포함) <span class="req">*</span> 기본 3,000</label><input id="f-fee" type="number" value="3000"></div>
+      <div class="fld"><label>발송단계 <span class="req">*</span></label><select><option>1 접수 (기본)</option><option>2 준비</option><option>3 발송</option><option>9 완료</option></select><div class="f-help">건너뛰기·역행·완료 후 수정은 사유 필수(§8.3).</div></div>
+      <div class="fld full"><label>변경 사유 (단계 역행·완료 후 수정·삭제 시 필수)</label><input placeholder="예: 거래처 요청으로 발송→준비 정정"></div>
+    </div>
+    <div class="summary"><h4>금액 미리보기 (저장은 DB 확정값)</h4>
+      <table><tr><td>상품금액 (수량×단가)</td><td id="s-a">100,000</td></tr>
+      <tr><td>상품 공급가액</td><td id="s-ps">90,909</td></tr><tr><td>상품 VAT</td><td id="s-pv">9,091</td></tr>
+      <tr><td>추가 배송 청구액</td><td id="s-f">0</td></tr><tr><td>배송 공급가액 / VAT</td><td id="s-sv">0 / 0</td></tr>
+      <tr class="total"><td>최종 청구액</td><td id="s-t">100,000</td></tr></table>
+      <p class="hint">계산식 §7.1 · VAT 10% · 원 단위 반올림 · 합계 불변조건(공급가+VAT=합계). JS 미리보기와 DB 결과가 다르면 DB 값을 표시.</p>
+      <div class="sticky-save"><button class="btn ghost" type="button">취소</button><button class="btn primary" type="button">저장 (중복클릭 방지·잠금)</button></div>
+      <p class="hint">수정 시: <code class="inline">id + version</code> 낙관적 잠금. 충돌 시 “다른 관리자가 먼저 수정 — 새 데이터 불러오기”(자동 덮어쓰기 금지).</p>
+    </div>
+    </div>
+    <div class="modal"><b>확인 모달 예시 (삭제 — 발주번호·거래처·주문자·제품 표시 + 사유 필수)</b><br>
+      20260927-00001 · A상사 · 김주문 · 제품A 를 논리 삭제할까요? 삭제 후 일반 목록에서 제외, owner가 복원 가능.<br>
+      <input placeholder="삭제 사유 *" style="margin-top:8px"><div style="margin-top:8px;display:flex;gap:8px"><button class="btn danger sm" type="button">삭제하기</button><button class="btn ghost sm" type="button">취소</button></div></div>
+  </div>
+  <div class="spec">유효성 §6.3~§6.6: 공백만 입력 불가, 주문자·휴대폰 형식·이메일 형식, 수량 정수·범위, MOQ, 금액 음수 불가. 미저장 이동 시 확인. 저장 중 버튼 잠금 + client_request_id 재시도 동일 번호 반환(§8.1).</div>
+</section>
+
+<!-- ============ W06 ============ -->
+<section class="screen" id="w06">
+  <div class="screen-head"><span class="badge">W-06 · 핵심</span><h2>발주 상세 (조회·이력·다운로드)</h2>
+  <p class="sub">전체 항목 + 계산 내역 + 등록·수정 정보 + 변경 이력. 다운로드는 최신 저장값 재조회 후 A4 출력 DOM에서 생성(§10.2).</p></div>
+  <div class="mock">
+    <div class="bar"><span class="b-logo">발주 상세 20260927-00001</span><span class="pill p1">접수</span><span class="b-user">목록으로 · 수정 · 삭제</span></div>
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-top:12px" class="formwrap">
+    <div>
+      <dl class="kv"><dt>거래처</dt><dd>A상사</dd><dt>주문자</dt><dd>김주문</dd><dt>연락처 / 이메일</dt><dd>010-1234-5678 / kim@example.com</dd><dt>제품 / 코드</dt><dd>제품A / A01</dd><dt>옵션</dt><dd>색상: 화이트 / 추가 포장</dd>
+      <dt>수량 / MOQ / 단가</dt><dd>10개 / 5개 / 10,000원</dd><dt>세금·배송</dt><dd>부가세 별도 N(VAT포함) · 배송비 포함 Y · 배송비 3,000원(참고값)</dd>
+      <dt>발주일 / 번호날짜</dt><dd>2026-09-27 10:30 KST / 2026-09-27 (다를 수 있음)</dd>
+      <dt>등록</dt><dd>2026-09-27 10:31 김관리</dd><dt>최종 수정</dt><dd>2026-09-27 11:02 이관리 (v3)</dd></dl>
+      <div class="summary" style="margin-top:12px"><h4>계산 내역 (DB 확정값)</h4>
+      <table><tr><td>상품 공급가액</td><td>90,909</td></tr><tr><td>상품 VAT</td><td>9,091</td></tr><tr><td>추가 배송 청구액 (공급가+VAT)</td><td>0 (0+0)</td></tr><tr class="total"><td>공급가 합계 / VAT 합계 / 최종 청구액</td><td>90,909 / 9,091 / 100,000</td></tr></table></div>
+      <h4 style="margin:14px 0 4px">변경 이력 (order_audit_logs)</h4>
+      <div class="timeline"><div><b>11:02</b> 이관리 · 단계 변경 없음(수량 8→10) · 사유: 거래처 추가 요청 · v2→v3</div><div><b>10:45</b> 김관리 · stage 1→2→1 역행 · 사유: 오입력 정정</div><div><b>10:31</b> 김관리 · 생성 · 20260927-00001 발급</div></div>
+    </div>
+    <div class="summary"><h4>출력 · 다운로드</h4>
+      <button class="btn primary" style="width:100%" type="button">PNG 다운로드</button>
+      <button class="btn dark" style="width:100%;margin-top:8px" type="button">PDF 다운로드</button>
+      <p class="hint">파일명: <code class="inline">모션나인_발주명세서_20260927-00001.pdf</code><br>· 고정폭 A4 출력 DOM 사용(모바일 화면 캡처 아님)<br>· 한글 폰트 로드 대기 → 페이지별 캡처<br>· 장문은 다중페이지 PDF / PNG는 페이지별 파일<br>· 이미지 PDF라 본문 검색 미지원 — HTML 상세가 원본<br>· 이메일·UUID·권한은 표시 금지(§10.1)</p>
+      <div class="okbox">명세서 포함: 문서명·번호·거래처·주문자·연락처·이메일·발주일·제품·수량·단가·세금배송·공급가·VAT·합계·단계·등록/수정자·출력시각(KST)</div>
+    </div>
+    </div>
+  </div>
+  <div class="spec">권한 없는/없는 건은 공통 오류 처리(§9.1). 완료 상태 금액 수정 시 추가 확인 + 사유. 미저장 폼 출력은 “저장 후 출력” 안내.</div>
+</section>
+
+<!-- ============ W07 ============ -->
+<section class="screen" id="w07">
+  <div class="screen-head"><span class="badge">W-07</span><h2>관리자 설정 (owner 전용)</h2>
+  <p class="sub">승인 대기·활성·중지 사용자, 정원(3~5)·역할, 승인/중지 이력. 모든 변경은 설정행 잠금 + 감사(§4.2).</p></div>
+  <div class="mock">
+    <div class="bar"><span class="b-logo">관리자 설정</span><span class="b-user">owner 전용 · 일반 admin 접근 불가</span></div>
+    <div class="summary" style="margin-top:12px"><h4>정원: 활성 4 / 최대 5 (대표 포함) — 3~5 범위에서만 변경 가능</h4>
+    <div class="quota"><i style="width:80%"></i></div>
+    <p class="hint">마지막 owner 중지·강등 금지 · 정원을 현재 활성보다 낮게 축소 금지 · UUID 기준 계산(§4.2).</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><select style="max-width:200px"><option>최대 인원: 5</option><option>4</option><option>3</option></select><button class="btn primary sm" type="button">정원 변경</button></div></div>
+    <h4>승인 대기 (1)</h4>
+    <table class="grid"><tr><th>표시 이름·이메일</th><th>인증</th><th>신청일</th><th>처리</th></tr>
+    <tr><td>홍길동 · new-admin@…</td><td>이메일 확인됨</td><td>09/27</td><td><button class="btn primary sm">승인</button> <button class="btn ghost sm">거절</button></td></tr></table>
+    <p class="hint">이메일 미확인 계정은 승인 버튼 비활성화.</p>
+    <h4>활성 (4)</h4>
+    <table class="grid"><tr><th>이름</th><th>역할</th><th>상태</th><th>처리</th></tr>
+    <tr><td>김관리 (나)</td><td>owner</td><td><span class="pill p9">active</span></td><td>—</td></tr>
+    <tr><td>이관리</td><td>admin</td><td><span class="pill p9">active</span></td><td><button class="btn ghost sm">중지</button> <button class="btn ghost sm">owner 승격</button></td></tr></table>
+    <h4>중지 (1) · 승인/중지 이력</h4>
+    <table class="grid"><tr><th>대상</th><th>액션</th><th>처리자·시각</th><th>처리</th></tr>
+    <tr><td>박관리</td><td>suspend</td><td>김관리 · 09/20</td><td><button class="btn sm">재활성화(정원 검사)</button></td></tr></table>
+  </div>
+  <div class="spec">관리자 이메일·인증상태는 owner RPC가 최소 반환(§6.2). Auth 영구삭제는 별도 절차, 앱에서는 중지로 운영.</div>
+</section>
+
+<!-- ============ W08 ============ -->
+<section class="screen" id="w08">
+  <div class="screen-head"><span class="badge">W-08</span><h2>삭제 내역 (owner 전용 · 복원)</h2>
+  <p class="sub">논리 삭제건 조회·복원. 번호·이력 유지, 복원 시 deleted 필드만 해제(§6.4).</p></div>
+  <div class="mock">
+    <div class="bar"><span class="b-logo">삭제 내역</span><span class="b-user">owner 전용</span></div>
+    <table class="grid desktop-only" style="margin-top:12px"><tr><th>발주번호</th><th>거래처·제품</th><th>삭제시각·삭제자</th><th>사유</th><th>복원</th></tr>
+    <tr><td>20260920-00004</td><td>D상사 · 제품X</td><td>09/21 14:00 김관리</td><td>중복 등록</td><td><button class="btn primary sm">복원</button></td></tr></table>
+    <div class="cards-m"><div class="ocard"><div class="t1"><span>20260920-00004</span><span class="pill p-stop">삭제됨</span></div><div class="t2">D상사 · 제품X · 사유: 중복 등록</div><div class="t3"><span>09/21 김관리</span><button class="btn primary sm">복원</button></div></div></div>
+    <p class="hint">일반 admin은 이 화면·복원 RPC 접근 불가. 복원도 version 증가 + 감사 로그 기록. 영구 삭제는 웹 UI 미제공(§4.1).</p>
+  </div>
+  <div class="spec">삭제 후 일반 목록/검색/집계에서 제외 확인 → 복원 후 동일 번호·금액·이력 유지(수용테스트 §12.1).</div>
+</section>
+
+<div class="hero" style="margin-top:22px">
+  <h3 style="margin:0">착수 전 확정 필요 (설계서 §13) — 화면에 영향</h3>
+  <p>① 단가 필수·VAT포함 해석 ② 배송비 포함 Y 문구(“포함/별도청구” 병기 반영됨) ③ 1발주=1품목 확정 ④ 정원 3/4/5·최초 owner ⑤ 번호날짜 기준 ⑥ Gmail/도메인 ⑦ MOQ·삭제·반올림·역행사유. 확정 시 이 와이어프레임 문구·기본값(상태1·배송비3000·VAT N·포함Y·KST now) 그대로 구현.</p>
+</div>
+<p class="foot">파일 위치: <code class="inline">motionnine/wireframe/index.html</code> · 브라우저에서 직접 열람 가능 · 외부 CDN 없음(오프라인 OK) · 다음 단계: 이 화면 ID(W-01~W-08) 기준으로 <code class="inline">web/</code> 실구현 + Supabase 마이그레이션.</p>
+</div>
+
+<script>
+const wrap=document.getElementById('wrap');
+document.getElementById('btnPc').onclick=e=>{wrap.classList.remove('mobile-mode');setOn(e.target)};
+document.getElementById('btnMo').onclick=e=>{wrap.classList.add('mobile-mode');setOn(e.target);document.getElementById('w04').scrollIntoView({behavior:'smooth'})};
+function setOn(b){document.querySelectorAll('.toggle button').forEach(x=>x.classList.remove('on'));b.classList.add('on')}
+document.querySelectorAll('.tabs button').forEach(b=>{b.onclick=()=>{const p=b.closest('.mock');p.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');p.querySelectorAll('.tabpane').forEach(t=>t.classList.remove('on'));document.getElementById(b.dataset.t).classList.add('on')}});
+// 금액 미리보기 (§7.1)
+const q=document.getElementById('f-qty'),p=document.getElementById('f-price'),v=document.getElementById('f-vat'),s=document.getElementById('f-ship'),f=document.getElementById('f-fee');
+function r(x){return Math.round(x)}
+function calc(){const Q=+q.value||0,P=+p.value||0,F=+f.value||0,A=Q*P;let ps,pv;if(v.value==='Y'){ps=A;pv=r(A*0.10)}else{ps=r(A/1.1);pv=A-ps}
+let fc=0,ss=0,sv=0;if(s.value==='N'){fc=F;ss=r(F/1.1);sv=F-ss}
+const st=ps+ss,vt=pv+sv,t=st+vt;const fm=n=>n.toLocaleString('ko-KR');
+set('s-a',fm(A));set('s-ps',fm(ps));set('s-pv',fm(pv));set('s-f',fm(fc));set('s-sv',fm(ss)+' / '+fm(sv));set('s-t',fm(t));}
+function set(id,v){const e=document.getElementById(id);if(e)e.textContent=v}
+[q,p,v,s,f].forEach(e=>e&&e.addEventListener('input',calc));calc();
+</script>
+</body>
+</html>

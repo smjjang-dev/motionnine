@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<title>W-02 가입·인증 — 모션나인 와이어프레임</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="logo" href="index.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
+  <span class="ver">W-02 가입 · 인증</span>
+  <nav class="topnav">
+    <a href="index.html">허브</a><a href="login.html">01 로그인</a><a href="signup.html" class="active">02 가입·인증</a><a href="pending.html">03 승인대기</a><a href="orders.html">04 목록</a><a href="order-form.html">05 등록·수정</a><a href="order-detail.html">06 상세</a><a href="admin.html">07 관리자</a><a href="trash.html">08 삭제내역</a>
+  </nav>
+  <div class="spacer"></div>
+  <div class="toggle"><button id="btnPc" class="on" type="button">PC</button><button id="btnMo" type="button">모바일</button></div>
+</div>
+<div class="wrap" id="wrap">
+<div class="phone-note">모바일 미리보기 모드입니다.</div>
+<section class="screen">
+  <div class="screen-head"><span class="badge">W-02</span><h2>가입 · 이메일 인증 · 비밀번호 재설정</h2>
+  <p class="sub">탭을 눌러 4가지 상태를 확인. 가입 직후 role/status는 서버가 pending/admin으로 강제(§4.2).</p></div>
+  <div class="mock">
+    <div class="tabs">
+      <button class="on" data-t="t-join" type="button">① 이메일 가입 폼</button>
+      <button data-t="t-sent" type="button">② 인증메일 발송됨</button>
+      <button data-t="t-fail" type="button">③ 만료·실패·재전송</button>
+      <button data-t="t-reset" type="button">④ 비밀번호 재설정</button>
+    </div>
+    <div class="tabpane on" id="t-join">
+      <div class="auth-box">
+        <h3>관리자 가입 신청</h3>
+        <label>표시 이름 *</label><input value="홍길동">
+        <label>이메일 *</label><input value="new-admin@example.com">
+        <div class="f-help hint">가입 확인·승인 안내를 받는 주소. Google 계정과 동일 주소 권장(임의 병합 금지).</div>
+        <label>비밀번호 * (8자 이상)</label><input type="password" value="••••••••">
+        <button class="btn primary" style="width:100%;margin-top:12px" type="button">가입 신청</button>
+        <p class="hint">가입 → <code class="inline">app_members(role=admin, status=pending)</code> 자동 생성. 이메일 확인 전 승인 불가(§4.2-3).</p>
+      </div>
+    </div>
+    <div class="tabpane" id="t-sent">
+      <div class="auth-box"><div class="okbox"><b>인증 메일을 보냈습니다.</b><br>new-admin@example.com 받은편지함(스팸함 포함)에서 24시간 내 링크를 눌러주세요.</div>
+      <button class="btn ghost" style="width:100%;margin-top:10px" type="button">인증메일 다시 받기 (58초 후 가능)</button>
+      <p class="hint">무료 SMTP 한도 도달 시: “잠시 후 다시 시도 + Google 로그인(연결된 경우) 안내” 표시(§4.3).</p></div>
+    </div>
+    <div class="tabpane" id="t-fail">
+      <div class="auth-box"><div class="errbox"><b>인증 링크가 만료되었거나 이미 사용되었습니다.</b><br>사유: 만료 / 이미 인증 완료 / 다른 브라우저에서 열기(PKCE verifier 없음)</div>
+      <div class="row" style="margin-top:10px"><button class="btn primary sm" style="flex:1" type="button">새 링크 받기</button><a class="btn sm" style="flex:1" href="login.html">로그인으로 돌아가기</a></div></div>
+    </div>
+    <div class="tabpane" id="t-reset">
+      <div class="auth-box"><h3>비밀번호 재설정</h3><label>가입 이메일 *</label><input value="admin@example.com">
+      <button class="btn primary" style="width:100%;margin-top:12px" type="button">재설정 링크 보내기</button>
+      <p class="hint">성공·실패 메시지 통일. 속도 제한 적용(§4.3).</p></div>
+    </div>
+  </div>
+  <div class="spec">경로 제안: <code class="inline">/auth/confirm</code> <code class="inline">/auth/reset</code> <code class="inline">/auth/callback</code> (§9.2).</div>
+</section>
+</div>
+<script src="../js/common.js"></script>
+<script src="../js/tabs.js"></script>
+</body>
+</html>

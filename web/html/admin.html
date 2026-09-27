@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<title>W-07 관리자 설정 — 모션나인 와이어프레임</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="logo" href="index.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
+  <span class="ver">W-07 관리자</span>
+  <nav class="topnav">
+    <a href="index.html">허브</a><a href="login.html">01 로그인</a><a href="signup.html">02 가입·인증</a><a href="pending.html">03 승인대기</a><a href="orders.html">04 목록</a><a href="order-form.html">05 등록·수정</a><a href="order-detail.html">06 상세</a><a href="admin.html" class="active">07 관리자</a><a href="trash.html">08 삭제내역</a>
+  </nav>
+  <div class="spacer"></div>
+  <div class="toggle"><button id="btnPc" class="on" type="button">PC</button><button id="btnMo" type="button">모바일</button></div>
+</div>
+<div class="wrap" id="wrap">
+<div class="phone-note">모바일 미리보기 모드입니다.</div>
+<section class="screen">
+  <div class="screen-head"><span class="badge">W-07</span><h2>관리자 설정 (owner 전용)</h2>
+  <p class="sub">승인 대기·활성·중지 사용자, 정원(3~5)·역할, 승인/중지 이력. 모든 변경은 설정행 잠금 + 감사(§4.2).</p></div>
+  <div class="mock">
+    <div class="bar"><span class="b-logo">관리자 설정</span><span class="b-user">owner 전용 · 일반 admin 접근 불가</span></div>
+    <div class="summary" style="margin-top:12px"><h4>정원: 활성 4 / 최대 5 (대표 포함) — 3~5 범위에서만 변경 가능</h4>
+    <div class="quota"><i style="width:80%"></i></div>
+    <p class="hint">마지막 owner 중지·강등 금지 · 정원을 현재 활성보다 낮게 축소 금지 · UUID 기준 계산(§4.2).</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><select style="max-width:200px"><option>최대 인원: 5</option><option>4</option><option>3</option></select><button class="btn primary sm" type="button">정원 변경</button></div></div>
+    <h4>승인 대기 (1)</h4>
+    <table class="grid"><tr><th>표시 이름·이메일</th><th>인증</th><th>신청일</th><th>처리</th></tr>
+    <tr><td>홍길동 · new-admin@…</td><td>이메일 확인됨</td><td>09/27</td><td><button class="btn primary sm">승인</button> <button class="btn ghost sm">거절</button></td></tr></table>
+    <p class="hint">이메일 미확인 계정은 승인 버튼 비활성화.</p>
+    <h4>활성 (4)</h4>
+    <table class="grid"><tr><th>이름</th><th>역할</th><th>상태</th><th>처리</th></tr>
+    <tr><td>김관리 (나)</td><td>owner</td><td><span class="pill p9">active</span></td><td>—</td></tr>
+    <tr><td>이관리</td><td>admin</td><td><span class="pill p9">active</span></td><td><button class="btn ghost sm">중지</button> <button class="btn ghost sm">owner 승격</button></td></tr></table>
+    <h4>중지 (1) · 승인/중지 이력</h4>
+    <table class="grid"><tr><th>대상</th><th>액션</th><th>처리자·시각</th><th>처리</th></tr>
+    <tr><td>박관리</td><td>suspend</td><td>김관리 · 09/20</td><td><button class="btn sm">재활성화(정원 검사)</button></td></tr></table>
+  </div>
+  <div class="spec">관리자 이메일·인증상태는 owner RPC가 최소 반환(§6.2). 계정은 중지로 운영, Auth 영구삭제는 별도 절차.</div>
+</section>
+</div>
+<script src="../js/common.js"></script>
+</body>
+</html>

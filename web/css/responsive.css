@@ -1,0 +1,31 @@
+/* 모션나인 와이어프레임 — responsive.css
+ * 기획설계서 §5.4: 992px+ 전체테이블·2열폼 / 768~991 중요열 / 767- 카드·1열·하단저장 */
+@media(max-width:991px){
+  .stage-cards{grid-template-columns:repeat(2,1fr)}
+  .formwrap{grid-template-columns:1fr}
+}
+@media(max-width:767px){
+  body{font-size:16px}
+  table.grid.desktop-only{display:none}
+  .cards-m{display:grid;gap:10px;margin-top:12px}
+  .ocard{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff}
+  .ocard .t1{display:flex;justify-content:space-between;gap:8px;font-weight:800;font-size:14px}
+  .ocard .t2{font-size:13.5px;color:#334155;margin-top:4px}
+  .ocard .t3{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:13px;color:var(--muted)}
+  .form{grid-template-columns:1fr}
+  .formwrap{grid-template-columns:1fr}
+  .sticky-save{position:sticky;bottom:0;background:#ffffffee;border-top:1px solid var(--line);
+    padding:10px;margin:14px -18px -18px;display:flex;gap:8px}
+  .sticky-save .btn{flex:1}
+  .kv{grid-template-columns:110px 1fr}
+}
+/* 상단 토글 모바일 미리보기 (PC에서도 767px 동작 확인용) */
+.wrap.mobile-mode table.grid.desktop-only{display:none}
+.wrap.mobile-mode .cards-m{display:grid;gap:10px;margin-top:12px}
+.wrap.mobile-mode .ocard{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff}
+.wrap.mobile-mode .ocard .t1{display:flex;justify-content:space-between;gap:8px;font-weight:800;font-size:14px}
+.wrap.mobile-mode .ocard .t2{font-size:13.5px;color:#334155;margin-top:4px}
+.wrap.mobile-mode .ocard .t3{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:13px;color:var(--muted)}
+.wrap.mobile-mode .form{grid-template-columns:1fr}
+.wrap.mobile-mode .formwrap{grid-template-columns:1fr}
+@media print{.topbar,.toggle,.tabs{display:none}}

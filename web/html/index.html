@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<title>모션나인 발주관리 — 와이어프레임 허브</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="logo" href="index.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
+  <span class="ver">WIREFRAME v1.1 · 허브</span>
+  <nav class="topnav">
+    <a href="index.html" class="active">허브</a><a href="login.html">01 로그인</a><a href="signup.html">02 가입·인증</a><a href="pending.html">03 승인대기</a><a href="orders.html">04 목록</a><a href="order-form.html">05 등록·수정</a><a href="order-detail.html">06 상세</a><a href="admin.html">07 관리자</a><a href="trash.html">08 삭제내역</a>
+  </nav>
+  <div class="spacer"></div>
+  <div class="toggle"><button id="btnPc" class="on" type="button">PC</button><button id="btnMo" type="button">모바일</button></div>
+</div>
+<div class="wrap" id="wrap">
+<div class="phone-note">모바일 미리보기 모드입니다.</div>
+<div class="hero">
+  <h1>발주현황 관리 — 화면 와이어프레임 (총 8화면)</h1>
+  <p>기준: <code class="inline">docs/모션나인_발주현황_기획설계서.md v1.1</code> · 대상: 관리자 3~5명, PC·스마트폰 반응형 · 전 페이지 더미(동작 없음).</p>
+  <div class="legend">
+    <div class="li"><b>색 규칙(§5.4)</b><br>헤더 진네이비 · 주버튼 청록 · 접수 <span class="pill p1">회색</span> 준비 <span class="pill p2">주황</span> 발송 <span class="pill p3">파랑</span> 완료 <span class="pill p9">초록</span></div>
+    <div class="li"><b>공통 규칙</b><br>· 정렬: 발주일↓ + ID↓ · 20건/페이지(50건 선택, 최대 50)<br>· 검색 버튼/Enter 실행, 서버 검색</div>
+    <div class="li"><b>번호·금액</b><br>· 발주번호 <code class="inline">YYYYMMDD-5자리</code> 읽기전용<br>· 금액은 서버 확정, 화면은 미리보기(§7.1)</div>
+    <div class="li"><b>폴더 구조</b><br><code class="inline">web/html</code> 화면 · <code class="inline">web/css</code> 스타일 · <code class="inline">web/js</code> 스크립트 · <code class="inline">web/img</code> 이미지</div>
+  </div>
+  <div class="flow">로그인 → (미승인) 승인대기 → (승인·활성) 발주목록 ⇄ 등록 ⇄ 상세 ⇄ 수정/삭제
+                                   ↘ (owner) 관리자설정 · 삭제내역(복원)
+가입: 이메일가입→메일인증→pending / Google인증→pending → owner 승인 → active</div>
+  <div class="nav-cards">
+    <a href="login.html"><b>W-01 로그인</b><span>Google·이메일, 가입·재설정 진입</span></a>
+    <a href="signup.html"><b>W-02 가입 · 인증 · 재설정</b><span>4상태 탭 (가입/발송/만료/재설정)</span></a>
+    <a href="pending.html"><b>W-03 승인대기 · 중지</b><span>본인 상태 + 로그아웃</span></a>
+    <a href="orders.html"><b>W-04 발주목록 ★</b><span>집계·검색·테이블/카드·페이지·PDF</span></a>
+    <a href="order-form.html"><b>W-05 등록 · 수정 ★</b><span>입력순서 §5.3 + 금액 미리보기</span></a>
+    <a href="order-detail.html"><b>W-06 상세 ★</b><span>계산내역·이력·PNG/PDF</span></a>
+    <a href="admin.html"><b>W-07 관리자 설정</b><span>owner 전용, 정원·승인·중지</span></a>
+    <a href="trash.html"><b>W-08 삭제내역</b><span>owner 전용, 복원</span></a>
+  </div>
+</div>
+<p class="foot">다음 단계: 이 화면 ID(W-01~W-08) 기준으로 실구현 + Supabase 마이그레이션. 확정 필요 사항은 §13 (단가·배송비 문구·1발주1품목·정원·번호날짜·SMTP·MOQ/삭제/역행).</p>
+</div>
+<script src="../js/common.js"></script>
+</body>
+</html>

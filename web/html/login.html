@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<title>W-01 로그인 — 모션나인 와이어프레임</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="logo" href="index.html"><img src="../img/logo.svg" alt=""> 모션나인 발주관리</a>
+  <span class="ver">W-01 로그인</span>
+  <nav class="topnav">
+    <a href="index.html">허브</a><a href="login.html" class="active">01 로그인</a><a href="signup.html">02 가입·인증</a><a href="pending.html">03 승인대기</a><a href="orders.html">04 목록</a><a href="order-form.html">05 등록·수정</a><a href="order-detail.html">06 상세</a><a href="admin.html">07 관리자</a><a href="trash.html">08 삭제내역</a>
+  </nav>
+  <div class="spacer"></div>
+  <div class="toggle"><button id="btnPc" class="on" type="button">PC</button><button id="btnMo" type="button">모바일</button></div>
+</div>
+<div class="wrap" id="wrap">
+<div class="phone-note">모바일 미리보기 모드입니다.</div>
+<section class="screen">
+  <div class="screen-head"><span class="badge">W-01</span><h2>로그인</h2>
+  <p class="sub">Google 버튼 · 이메일 로그인 · 가입 / 비밀번호 재설정 진입. 정적 HTML은 열람 가능, 업무 데이터는 활성 관리자만(§4.1).</p></div>
+  <div class="mock">
+    <div class="auth-box">
+      <div class="logo-big"><img src="../img/logo.svg" alt="모션나인">모션나인</div>
+      <h3>발주현황 관리 로그인</h3>
+      <p class="hint" style="text-align:center">관리자 전용 · 내부용 (noindex)</p>
+      <button class="btn google" style="width:100%;margin-top:10px" type="button">G Google로 계속하기</button>
+      <div class="hint" style="text-align:center;margin:10px 0">또는</div>
+      <label for="li-email">이메일 *</label>
+      <input id="li-email" value="admin@example.com">
+      <label for="li-pw">비밀번호 *</label>
+      <input id="li-pw" type="password" value="••••••••">
+      <div class="err">예시: 비밀번호가 일치하지 않습니다. (실제 문구는 통일형 사용 §4.3)</div>
+      <button class="btn primary" style="width:100%;margin-top:12px" type="button">이메일로 로그인</button>
+      <div class="row" style="margin-top:10px">
+        <a class="btn ghost sm" style="flex:1" href="signup.html">회원가입</a>
+        <a class="btn ghost sm" style="flex:1" href="signup.html">비밀번호 재설정</a>
+      </div>
+      <p class="hint">· Apple 로그인은 범위 제외(§4.3)<br>· 매 로그인마다 메일 발송 없음. 확인·재설정 메일에만 무료 SMTP 사용(§14.3)<br>· 실패 시 계정 존재 여부 과다 노출 금지</p>
+    </div>
+  </div>
+  <div class="spec">설계 근거 §4.2~§4.4, §5.1 · PKCE OAuth 콜백 / Confirm-email / redirect allowlist는 구현 단계 연결.</div>
+</section>
+</div>
+<script src="../js/common.js"></script>
+</body>
+</html>
