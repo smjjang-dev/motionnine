@@ -374,7 +374,7 @@ begin
   limit v_size offset (v_page - 1) * v_size;
 end $$;
 
--- 9-4. 단계별 건수 (검색어·기간 적용, 단계 필터 제외 — §5.2)
+-- 9-4. 단계별 건수 (검색어·기간 적용, 단계 필터 제외, 삭제건 제외 — §5.2)
 create or replace function public.motion9_stage_counts(p_q text, p_from date, p_to date)
 returns table (stage smallint, cnt bigint)
 language plpgsql stable security invoker set search_path = public, private, extensions as $$
@@ -395,7 +395,8 @@ begin
   end if;
   return query
   select o.shipping_stage, count(*)::bigint from public.motion9_orders o
-  where (v_gte is null or o.ordered_at >= v_gte)
+  where o.deleted_at is null
+    and (v_gte is null or o.ordered_at >= v_gte)
     and (v_lt is null or o.ordered_at < v_lt)
     and (v_pat is null or o.client_name ilike v_pat escape '\'
        or o.orderer_name ilike v_pat escape '\'
